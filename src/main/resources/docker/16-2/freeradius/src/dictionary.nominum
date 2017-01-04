@@ -1,0 +1,11 @@
+VENDOR Nominum 16122
+
+#
+# Standard attribute
+#
+BEGIN-VENDOR Nominum
+ATTRIBUTE User-Role 1 string
+ATTRIBUTE User-Id 2 string
+ATTRIBUTE User-Ip 3 string
+ATTRIBUTE User-Type 4 string
+END-VENDOR Nominum

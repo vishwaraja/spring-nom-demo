@@ -1,0 +1,10 @@
+[[loaders]]
+  id = "engage dns loader 0"
+  topic = "nom-dns-base"
+  table = "nom.dns"
+  parser= "DnsParser()"
+[[loaders]]
+  id = "engage proxy loader 0"
+  topic = "nom-proxy-transaction"
+  table = "nom.proxy"
+  parser= "ProxyParser()"

@@ -1,0 +1,97 @@
+dn: dc=nominum,dc=com
+objectClass: dcObject
+objectClass: organization
+o: nominum.com
+dc: nominum
+
+dn: ou=Users,dc=nominum,dc=com
+objectClass: organizationalUnit
+ou: Users
+
+dn: cn=AdminName Surname,ou=Users,dc=nominum,dc=com
+cn: AdminName Surname
+sn: Surname
+objectClass: inetOrgPerson
+userPassword: admin
+uid: admin
+businessCategory:ROLE_ADMIN
+
+dn: cn=Name1 Surname1,ou=Users,dc=nominum,dc=com
+cn: Name1 Surname1
+sn: Surname1
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user1
+businessCategory:ROLE_USER
+employeeType: household
+registeredAddress: 127.0.0.1
+
+dn: cn=Name2 Surname2,ou=Users,dc=nominum,dc=com
+cn: Name2 Surname2
+sn: Surname2
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user2
+businessCategory:ROLE_USER
+employeeType: household
+registeredAddress: 127.0.0.1
+
+dn: cn=Name3 Surname3,ou=Users,dc=nominum,dc=com
+cn: Name3 Surname3
+sn: Surname3
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user3
+businessCategory:ROLE_USER
+employeeType: perdevice
+registeredAddress: 127.0.0.1
+
+dn: cn=Name4 Surname4,ou=Users,dc=nominum,dc=com
+cn: Name4 Surname4
+sn: Surname4
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user4
+businessCategory:ROLE_USER
+employeeType: perdevice
+registeredAddress: 127.0.0.1
+
+dn: cn=Name5 Surname5,ou=Users,dc=nominum,dc=com
+cn: Name5 Surname5
+sn: Surname5
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user5
+businessCategory:ROLE_USER
+employeeType: sb_single
+registeredAddress: 127.0.0.1
+
+dn: cn=Name6 Surname6,ou=Users,dc=nominum,dc=com
+cn: Name6 Surname6
+sn: Surname6
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user6
+businessCategory:ROLE_USER
+employeeType: sb_single
+registeredAddress: 127.0.0.1
+
+dn: cn=Name7 Surname7,ou=Users,dc=nominum,dc=com
+cn: Name7 Surname7
+sn: Surname7
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user7
+businessCategory:ROLE_USER
+employeeType: sb_profile
+registeredAddress: 127.0.0.1
+
+dn: cn=Name8 Surname8,ou=Users,dc=nominum,dc=com
+cn: Name8 Surname8
+sn: Surname8
+objectClass: inetOrgPerson
+userPassword: nominum
+uid: user8
+businessCategory:ROLE_USER
+employeeType: sb_profile
+registeredAddress: 127.0.0.1

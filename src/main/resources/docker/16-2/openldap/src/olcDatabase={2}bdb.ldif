@@ -1,0 +1,47 @@
+# AUTO-GENERATED FILE - DO NOT EDIT!! Use ldapmodify.
+# CRC32 44fae720
+dn: olcDatabase={2}bdb
+objectClass: olcDatabaseConfig
+objectClass: olcBdbConfig
+olcDatabase: {2}bdb
+olcSuffix: dc=nominum,dc=com
+olcAddContentAcl: FALSE
+olcLastMod: TRUE
+olcMaxDerefDepth: 15
+olcReadOnly: FALSE
+olcRootDN: cn=admin,dc=nominum,dc=com
+olcRootPW: {SSHA}xmSvT3JXdAaFLniq8VgeIIG8mWMvA5I7
+olcSyncUseSubentry: FALSE
+olcMonitoring: TRUE
+olcDbDirectory: /var/lib/ldap
+olcDbCacheSize: 1000
+olcDbCheckpoint: 1024 15
+olcDbNoSync: FALSE
+olcDbDirtyRead: FALSE
+olcDbIDLcacheSize: 0
+olcDbIndex: objectClass pres,eq
+olcDbIndex: cn pres,eq,sub
+olcDbIndex: uid pres,eq,sub
+olcDbIndex: uidNumber pres,eq
+olcDbIndex: gidNumber pres,eq
+olcDbIndex: mail pres,eq,sub
+olcDbIndex: ou pres,eq,sub
+olcDbIndex: sn pres,eq,sub
+olcDbIndex: givenName pres,eq,sub
+olcDbIndex: loginShell pres,eq
+olcDbIndex: memberUid pres,eq,sub
+olcDbIndex: nisMapName pres,eq,sub
+olcDbIndex: nisMapEntry pres,eq,sub
+olcDbLinearIndex: FALSE
+olcDbMode: 0600
+olcDbSearchStack: 16
+olcDbShmKey: 0
+olcDbCacheFree: 1
+olcDbDNcacheSize: 0
+structuralObjectClass: olcBdbConfig
+entryUUID: 10182710-a64c-1035-922b-f7e00274bf98
+creatorsName: cn=config
+createTimestamp: 20160504135845Z
+entryCSN: 20160504135845.836465Z#000000#000#000000
+modifiersName: cn=config
+modifyTimestamp: 20160504135845Z

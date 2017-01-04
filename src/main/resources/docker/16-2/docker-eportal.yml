@@ -1,0 +1,64 @@
+pm:
+  extends:
+    file: services.yml
+    service: pm
+  links:
+    - vertica
+    - pmpg
+    - nom-kafka
+provisioner:
+  extends:
+    file: services.yml
+    service: provisioner
+  links:
+    - pmpg
+pmpg:
+  extends:
+    file: services.yml
+    service: pmpg
+vertica:
+  extends:
+    file: services.yml
+    service: vertica
+loader:
+  extends:
+    file: services.yml
+    service: loader
+  links:
+    - nom-kafka
+    - vertica
+nom-kafka:
+  extends:
+    file: services.yml
+    service: nom-kafka
+cacheserve:
+  extends:
+    file: services.yml
+    service: cacheserve
+  links:
+    - provisioner
+    - proxy
+    - nom-kafka
+proxy:
+  extends:
+    file: services.yml
+    service: proxy
+  links:
+    - provisioner
+    - nom-kafka
+eportal:
+  extends:
+    file: services.yml
+    service: eportal
+  links:
+  - pm
+  - vertica
+  - ssm
+ssm:
+  extends:
+    file: services.yml
+    service: ssm
+  links:
+  - pm
+  - vertica
+  - nom-kafka

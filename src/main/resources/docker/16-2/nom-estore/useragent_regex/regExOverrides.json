@@ -1,0 +1,11 @@
+{
+  "version": {
+    "syntaxVersion": 1,
+    "contentVersion": 4,
+    "creationDate": "2016-04-06T11:30:00.000Z",
+    "releaseNotes": "latest notes"
+  },
+    "mobile": "Linux; C6943|One Build|VS980",
+    "mobileExclusion": "Xbox|Playstation"
+
+}

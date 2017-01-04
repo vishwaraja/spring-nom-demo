@@ -1,0 +1,318 @@
+[menu_data]
+[[menu_data.options]]
+    title="Choose the component to which you want to login:"
+    type="MENU"
+    subtitle="Please select an option:"
+    [[menu_data.options.options]]
+        title="Container Login (command line session)"
+        type="MENU"
+        subtitle="Choose the container to which you want to login"
+        [[menu_data.options.options.options]]
+            title="Cacheserve"
+            type="COMMAND"
+            number=0
+            command="docker exec -it %s bash"
+            help="Here are some helpful Cacheserve commands.\nType 'exit' to leave the container"
+            container_name="cacheserve"
+        [[menu_data.options.options.options]]
+            title="Proxy"
+            type="COMMAND"
+            number=1
+            command="docker exec -it %s bash"
+            help="Here are some helpful Proxy commands.\nType 'exit' to leave the container"
+            container_name="proxy"
+        [[menu_data.options.options.options]]
+            title="Policy Manager"
+            type="COMMAND"
+            number=2
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="pm"
+        [[menu_data.options.options.options]]
+            title="Provisioner"
+            type="COMMAND"
+            number=3
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="provisioner"
+        [[menu_data.options.options.options]]
+            title="Apps Portal (uui)"
+            type="COMMAND"
+            number=4
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="uui"
+        [[menu_data.options.options.options]]
+            title="Kafka"
+            type="COMMAND"
+            number=9
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="nom-kafka"
+        [[menu_data.options.options.options]]
+            title="Data Loader"
+            type="COMMAND"
+            number=10
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="loader"
+        [[menu_data.options.options.options]]
+            title="Extensions Store"
+            type="COMMAND"
+            number=11
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="estore"
+        [[menu_data.options.options.options]]
+            title="Subscriber Services Manager"
+            type="COMMAND"
+            number=12
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="ssm"
+        [[menu_data.options.options.options]]
+            title="Engage Portal"
+            type="COMMAND"
+            number=13
+            command="docker exec -it %s bash"
+            help="Preset users file: /usr/local/nom/etc/eportal/eportal_test_users.properties\nProperties file: /usr/local/nom/etc/eportal/eportal_config.properties\n\nType 'exit' to leave the container"
+            container_name="eportal"
+        [[menu_data.options.options.options]]
+            title="IP Tracker"
+            type="COMMAND"
+            number=14
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="iptracker"
+    [[menu_data.options.options]]
+        title="Container Login for Databases (command line)"
+        type="MENU"
+        subtitle="Choose the data base to which you want to connect:"
+        [[menu_data.options.options.options]]
+            title="Postgres: Apps Portal"
+            type="COMMAND"
+            number=6
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="appspg"
+        [[menu_data.options.options.options]]
+            title="Postgres: Policy Manager"
+            type="COMMAND"
+            number=7
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="pmpg"
+        [[menu_data.options.options.options]]
+            title="Vertica"
+            type="COMMAND"
+            number=8
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="vertica"
+    [[menu_data.options.options]]
+        title="Database Session (sql session)"
+        type="MENU"
+        subtitle="Choose the data base to which you want to connect:"
+        [[menu_data.options.options.options]]             
+            title="psql:   Apps Portal 'data' database"
+            type="COMMAND"
+            number=20
+            command="docker exec -it %s sh -c 'cd /usr/local/nom/pgsql-*/bin/; ./psql -U postgres -d data -p 15433'"
+            help="Here are some helpful Postgres commands:\n=# select * from engine; (shows all engines in database, don't forget the semicolon)\n=#\n\\\\d+ - list tables with size\n\\\\q-quit (not 'exit')\n\n"
+            container_name="appspg"
+        [[menu_data.options.options.options]]
+            title="psql:   Apps Portal 'config' database"
+            type="COMMAND"
+            number=21
+            command="docker exec -it %s sh -c 'cd /usr/local/nom/pgsql-*/bin/; ./psql -U postgres -d config -p 15433'"
+            help="Here are some helpful Postgres commands:\n=# select * from engine; (shows all engines in database, don't forget the semicolon)\n=#\n\\\\d+ - list tables with size\n\\\\q-quit (not 'exit')\n\n"
+            container_name="appspg"
+        [[menu_data.options.options.options]]
+            title="psql:   Policy Manager 'policy' database"
+            type="COMMAND"
+            number=22
+            command="docker exec -it %s sh -c 'cd /usr/local/nom/pgsql-*/bin/; ./psql -U postgres -d policy -p 15432'"
+            help="Here are some helpful Postgres commands:\n=# select * from engine; (shows all engines in database, don't forget the semicolon)\n=#\n\\\\d+ - list tables with size\n\\\\q-quit (not 'exit')\n\n"
+            container_name="pmpg"
+        [[menu_data.options.options.options]]
+            title="Vertica: N2 database"
+            type="COMMAND"
+            number=23
+            command="docker exec -it %s /opt/vertica/bin/vsql -U nomdb n2 -w redwoodcity"
+            help="Here are some helpful Postgres commands:\n=# select * from engine; (shows all engines in database, don't forget the semicolon)\n=#\n\\\\d+ - list tables with size\n\\\\q-quit (not 'exit')\n\n"
+            container_name="vertica"
+    [[menu_data.options.options]]
+        title="nom-tell Component"
+        type="MENU"
+        subtitle="Please select an option:"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell Cacheserve"
+            type="COMMAND"
+            number=30
+            command="docker exec -it %s nom-tell cacheserve"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="cacheserve"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell Proxy"
+            type="COMMAND"
+            number=31
+            command="docker exec -it %s nom-tell nom-proxy"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="proxy"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell Statmon"
+            type="COMMAND"
+            number=32
+            command="docker exec -it %s nom-tell statmon"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="cacheserve"
+         [[menu_data.options.options.options]]
+            title="Nom-Tell Subscriber Services Manager"
+            type="COMMAND"
+            number=34
+            command="docker exec -it %s nom-tell nom-ssm"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="ssm"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell IP Tracker"
+            type="COMMAND"
+            number=35
+            command="docker exec -it %s nom-tell iptracker"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="iptracker"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell Policy Manager"
+            type="COMMAND"
+            number=34
+            command="docker exec -it %s nom-tell nom-policy-manager"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="pm"
+        [[menu_data.options.options.options]]
+            title="Nom-Tell Apps Portal"
+            type="COMMAND"
+            number=34
+            command="docker exec -it %s nom-tell apps-portal"
+            help="Here are some helpful nom-tell commands:\nPress <tab> to see available commands\n\n'exit' to close the session"
+            container_name="uui"
+    [[menu_data.options.options]]         
+        title="nom-http Component"
+        type="MENU"
+        subtitle="Please select an option:"
+        [[menu_data.options.options.options]]
+            title="Nom-Http Policy Manager"
+            type="COMMAND"
+            number=40
+            command="docker run -it docker.nominum.com/nom-http/centos6_head -s `docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s`:8080 -u admin -p admin1"
+            help="Here are some helpful nom-http commands:\n      GET /status - confirms you have a connection\n      <control-D> to close the session"
+            container_name="pm"
+        [[menu_data.options.options.options]]
+            title="Nom-Http Subscriber Services Manager"
+            type="COMMAND"
+            number=41
+            command="docker run -it docker.nominum.com/nom-http/centos6_head -s `docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s`:9090 -u admin -p admin1"
+            help="Here are some helpful nom-http commands:\n      GET /status - confirms you have a connection\n      <control-D> to close the session"
+            container_name="ssm"
+        [[menu_data.options.options.options]]
+            title="Nom-Http IP Tracker"
+            type="COMMAND"
+            number=42
+            command="docker run -it docker.nominum.com/nom-http/centos6_head -s `docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s`:8082"
+            help="Here are some helpful nom-http commands:\n      GET /status - confirms you have a connection\n      <control-D> to close the session"
+            container_name="iptracker"
+    [[menu_data.options.options]]         
+        title="Kafka Telemetry Activities"
+        type="MENU"
+        subtitle="Please select an option:"
+        [[menu_data.options.options.options]]
+            title="Tail nom-telemetry"
+            type="COMMAND"
+            number=50
+            command="docker exec -it %s bash -c 'nom-kafka-dump --brokers localhost:9092 nom-telemetry --offset end'"
+            help="Here are some helpful Kafka commands:\n      <control-C> to close the session"
+            container_name="nom-kafka"
+        [[menu_data.options.options.options]]
+            title="Tail nom-proxy-transaction"
+            type="COMMAND"
+            number=51
+            command="docker exec -it %s bash -c 'nom-kafka-dump --brokers localhost:9092 nom-proxy-transaction --offset end'"
+            help="Here are some helpful Kafka commands:\n      <control-C> to close the session"
+            container_name="nom-kafka"
+        [[menu_data.options.options.options]]
+            title="Tail nom-dns-base"
+            type="COMMAND"
+            number=51
+            command="docker exec -it %s bash -c 'nom-kafka-dump --brokers localhost:9092 nom-dns-base --offset end'"
+            help="Here are some helpful Kafka commands:\n      <control-C> to close the session"
+            container_name="nom-kafka"
+        [[menu_data.options.options.options]]
+            title="Display kafka memory and CPU usage"
+            type="COMMAND"
+            command="python ./kafka-dump-parser.py"
+            number=53
+            help="No special instructions for menu item"
+            container_name=""
+    [[menu_data.options.options]]         
+        title="Environment Extras"
+        type="MENU"
+        subtitle="Please select an option:"
+        [[menu_data.options.options.options]]
+            title="Insert Subscriber Data for Engage"
+            type="COMMAND"
+            command="sh ./eportal/insert-reporting-data.sh"
+            number=52
+            help="No special instructions for menu item"
+            container_name=""
+        [[menu_data.options.options.options]]
+            title="Create Demo Subscribers"
+            type="COMMAND"
+            command="sh ./create_subscribers.sh"
+            number=53
+            help="Create Demo Subscribers - Demo Tool\n\n"
+            container_name=""
+        [[menu_data.options.options.options]]
+            title="Command Line: Free Radius"
+            type="COMMAND"
+            number=54
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="freeradius"
+        [[menu_data.options.options.options]]
+            title="Command Line: Open LDAP"
+            type="COMMAND"
+            number=55
+            command="docker exec -it %s bash"
+            help="No special instructions for container.\nType 'exit' to leave the container"
+            container_name="openldap"            
+[[menu_data.options.options]]
+ title="UI customization"
+ type="MENU"
+ subtitle="Please select an option:"     
+    [[menu_data.options.options.options]]
+     title="Talk-Talk Single Page 16.1.1"
+     type="COMMAND" 
+     number=57
+     command="sh ./eportal/eportal_custom_ui_tt.sh"
+     help="No special instructions for container.\nType 'exit' to leave the container"
+     container_name=""
+[[menu_data.options.options]]
+title="Turn on/off Top-N infected devices "
+type="MENU"
+subtitle="Please select an option:"     
+	[[menu_data.options.options.options]]
+	title="Turn On Infected devices"
+	type="COMMAND" 
+	number=58
+	command="sh ./nom-ssm/turn_on_inf_dev.sh"
+	help="No special instructions for container.\nType 'exit' to leave the container"
+	     container_name=""
+	[[menu_data.options.options.options]]
+	title="Turn Off Infected devices"
+	type="COMMAND" 
+	number=59
+	command="sh ./nom-ssm/turn_off_inf_dev.sh"
+	help="No special instructions for container.\nType 'exit' to leave the container"
+	     container_name=""
+	
+[[menu_data.options]]
+title="Exit"
+    type="EXITMENU"

@@ -1,0 +1,179 @@
+uui:
+  build: uui
+  ports:
+  - "8081:8081"
+  - "20101:20101"
+  expose:
+  - 8081
+  - 20101
+  hostname: apps-portal.docker.eng.nominum.com
+  mem_limit: 1G
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+condenser:
+  build: condenser
+  ports:
+  - "10000:10000"
+  expose:
+  - "10000"
+  hostname: condenser
+  mem_limit: 6G
+agg:
+  build: aggregator
+  ports:
+  - "9995:9995"
+  - "14252:14252"
+  cpu_shares: 200
+  mem_limit : 1G
+  hostname: agg.docker.eng.nominum.com
+  expose:
+  - "9995"
+  hostname: agg
+appspg:
+  build : appspg
+  privileged: true
+  ports:
+  - "15433:15433"
+  hostname: appspg.docker.eng.nominum.com
+  cpu_shares: 200
+  mem_limit: 500M
+pm:
+  build: nom-policy-manager
+  cpu_shares: 1024
+  mem_limit: 5G
+  ports:
+  - "8080:8080"
+  - "15001:15001"
+  hostname: pm.docker.eng.nominum.com
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+provisioner:
+  build: nom-provisioning-server
+  ports:
+  - "16002:16002"
+  - "15002:15002"
+pmpg:
+  build : pmpg
+  privileged: true
+  ports:
+  - "15432:15432"
+vertica:
+  build: nom-vertica
+  ports:
+  - "5433:5433"
+  expose:
+  - "5433"
+  cpu_shares: 1024
+  mem_limit: 6G
+  hostname: vertica
+loader:
+  build: data-loader
+  ports:
+  - 15004:15004
+  expose:
+  - "15004"
+  hostname: loader
+nom-kafka:
+  build: nom-kafka
+  ports:
+  - "9092:9092"
+  - "2181:2181"
+  expose:
+  - "9092"
+  - "2181"
+  environment:
+  - JAVA_HOME=/usr/local/nom/libexec/nom-kafka/java
+cacheserve:
+  build: cacheserve
+  ports:
+  - "53:53"
+  - "53:53/udp"
+  - "9434:9434"
+  expose:
+  - 53
+  - 9434
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+  hostname: cacheserve
+proxy:
+  build: nom-proxy
+  privileged: true
+  ports:
+  - "80:80"
+  - "443:443"
+  - "15003:15003"
+  expose:
+  - 80
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+  dns:
+  - 8.8.8.8
+  hostname: proxy
+eportal:
+  build: eportal
+  ports:
+  - "8444:8444"
+  - "15009:15009"
+  hostname: eportal.docker.eng.nominum.com
+  cpu_shares: 200
+  mem_limit: 2G
+  environment:
+  - HOST=${HOST}
+  - DOCKER_HOST=${DOCKER_HOST}
+estore:
+  build: nom-estore
+  ports:
+  - "8445:80"
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+ssm:
+  build: nom-ssm
+  ports:
+  - "9090:9090"
+  - "15006:15006"
+  expose:
+  - 9090
+  - 15006
+  environment:
+  - DOCKER_HOST=${DOCKER_HOST}
+iptracker:
+ build: iptracker
+ ports:
+ - "8082:8082"
+ expose:
+ - 8082
+ - 9092
+campaign-authenticity-api:
+ build: campaign-authenticity-api
+ ports:
+ - "9595:80"
+ expose:
+ - 9595
+ environment:
+ - HOST=${HOST}
+ - DOCKER_HOST=${DOCKER_HOST}
+preferencecenterdemo:
+ image: docker.nominum.com/preference-center-demo
+ ports:
+ - "1337:1337"
+freeradius:
+ build: freeradius
+ ports:
+ - "1812:1812/udp"
+ - "1813:1813/udp"
+ - "1814:1814/udp"
+ - "18120:18120/udp"
+openldap:
+  build: openldap
+  ports:
+  - "389:389"
+  - "8389:80"
+idp.shibboleth.com:
+  build: shibboleth
+  ports:
+  - "8446:8443"
+  - "8448:8080"
+  environment:
+  - HOST=${HOST}
+  - DOCKER_HOST=${DOCKER_HOST}
+  hostname: idp.shibboleth.com

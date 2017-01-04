@@ -1,0 +1,26 @@
+pm:
+  extends:
+    file: services.yml
+    service: pm
+  links:
+    - vertica
+    - pmpg
+    - nom-kafka
+provisioner:
+  extends:
+    file: services.yml
+    service: provisioner
+  links:
+    - pmpg
+pmpg:
+  extends:
+    file: services.yml
+    service: pmpg
+vertica:
+  extends:
+    file: services.yml
+    service: vertica
+nom-kafka:
+  extends:
+    file: services.yml
+    service: nom-kafka

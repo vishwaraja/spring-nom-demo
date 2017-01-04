@@ -1,0 +1,47 @@
+user1   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user1id,
+        User-Type = household
+        
+user2   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user2id,
+        User-Type = household
+
+user3   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user3id,
+        User-Type = perdevice
+
+user4   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user4id,
+        User-Type = perdevice
+
+user5   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user5id,
+        User-Type = sb_single
+
+user6   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user6id,
+        User-Type = sb_single
+
+user7   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user7sid,
+        User-Type = sb_profile
+
+user8   Cleartext-Password := "nominum"
+        Reply-Message = "Hello, %{User-Name}, the auth was successful!",
+        User-Ip = "127.0.0.1",
+        User-Id = user8id,
+        User-Type = sb_profile

@@ -1,0 +1,35 @@
+[
+  {
+    "device": "6c:29:95:3c:8c:f3",
+    "lastheard": 23,
+    "v4addrs": [
+      "192.168.1.241"
+    ],
+    "description": "Android phone",
+    "dhcpv4-client-identifier": "01:6c:29:95:3c:8c:f5",
+    "leased-v4addr": "192.168.1.241",
+    "lease-time": 42566
+  },
+  {
+    "device": "6c:40:08:96:74:8c",
+    "lastheard": 182,
+    "v4addrs": [
+      "192.168.1.218"
+    ],
+    "description": "IPhone 4s",
+    "dhcpv4-client-identifier": "01:6c:40:08:96:74:8c",
+    "leased-v4addr": "192.168.1.218",
+    "lease-time": 42580
+  },
+  {
+    "device": "b0:65:bd:8b:93:3f",
+    "lastheard": 346,
+    "v4addrs": [
+      "192.168.1.147"
+    ],
+    "description": "LG E612",
+    "dhcpv4-client-identifier": "01:b0:65:bd:8b:93:3f",
+    "leased-v4addr": "192.168.1.147",
+    "lease-time": 42849
+  }
+]

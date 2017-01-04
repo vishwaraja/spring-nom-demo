@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="com_nominum_eportal" entityID="com:nominum:eportal"><md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDnTCCAoWgAwIBAgIEFnJNZjANBgkqhkiG9w0BAQsFADB/MQswCQYDVQQGEwJVUzEZMBcGA1UE
+CBMQQ2FsaWZvcm5pYSBTdGF0ZTEVMBMGA1UEBxMMUmVkd29vZCBDaXR5MRAwDgYDVQQKEwdOb21p
+bnVtMRAwDgYDVQQLEwdVbmtub3duMRowGAYDVQQDExFFbmdhZ2UgUG9ydGFsIEFQSTAeFw0xNjA1
+MTcwOTI3MjRaFw0xNzA1MTcwOTI3MjRaMH8xCzAJBgNVBAYTAlVTMRkwFwYDVQQIExBDYWxpZm9y
+bmlhIFN0YXRlMRUwEwYDVQQHEwxSZWR3b29kIENpdHkxEDAOBgNVBAoTB05vbWludW0xEDAOBgNV
+BAsTB1Vua25vd24xGjAYBgNVBAMTEUVuZ2FnZSBQb3J0YWwgQVBJMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAgK2WoQui0u4CTsmwbhDbtN8oUGKfYaWq2X/8yWipr+wzqpsbQ+ZmFY6c
+GFnSljkrTYpIdcVjFMxyGLwIdo0KF1LweemA1RzV3SZVOEL+vd7jvdOOCHXiisUfuyevkKYZ99Qr
+hVtSzhZ6pzIgF+vsgplAeEJeOybnTGfJ/WBY7sq2zWkrw1YfuTuozikpkDTHZ9uQsJITkfV/flAc
+IsqRTfuiHWzd6mMRUxgcITdXnXjrtue3oA/okA/6XDfotX3ko3LcG2sjokWQA93L2l8ciI3oVSX4
+cG8188+AID7TyxgqU1hLzBloX9KQ40Me4GHuYyWZVQtqUZQkW0k1HRS78wIDAQABoyEwHzAdBgNV
+HQ4EFgQUgi8SD2OSvyObXCSuEfb/4qLvjN4wDQYJKoZIhvcNAQELBQADggEBABcVE/zB3VdkeENT
+JQS/SLoIgt74LOxb8HZHHgzeRi/tipfoWDKvQ5K0WXbxZz3eGEN6ljZVcYZMDkn64sh4Mt4KJ0uk
+5lSvPPIwe1n+vP+uPeuZrPrGUZdFyxXcBI/5KJ6cBwG4Nc6L0jDfSw5afXnApcG4AG/+LwUc1YV6
+NTqqEOs1Q7uDmyZXRYfRbEJWzdb9sR2O0VYcza3nqULEeCl0xngqrZ/Vyi0v2M43rbyMMDjjbOSQ
+jOHVFRn+slpsjHsu+L5Ur2Zz42/Xv85m9zE6Q0sakAuR3CFfPn7E7IbiSJnsTSnFAH2q/P7QO0uO
+U5nbMWevwy1nPwlPTDOoW4w=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:KeyDescriptor use="encryption"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDnTCCAoWgAwIBAgIEFnJNZjANBgkqhkiG9w0BAQsFADB/MQswCQYDVQQGEwJVUzEZMBcGA1UE
+CBMQQ2FsaWZvcm5pYSBTdGF0ZTEVMBMGA1UEBxMMUmVkd29vZCBDaXR5MRAwDgYDVQQKEwdOb21p
+bnVtMRAwDgYDVQQLEwdVbmtub3duMRowGAYDVQQDExFFbmdhZ2UgUG9ydGFsIEFQSTAeFw0xNjA1
+MTcwOTI3MjRaFw0xNzA1MTcwOTI3MjRaMH8xCzAJBgNVBAYTAlVTMRkwFwYDVQQIExBDYWxpZm9y
+bmlhIFN0YXRlMRUwEwYDVQQHEwxSZWR3b29kIENpdHkxEDAOBgNVBAoTB05vbWludW0xEDAOBgNV
+BAsTB1Vua25vd24xGjAYBgNVBAMTEUVuZ2FnZSBQb3J0YWwgQVBJMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAgK2WoQui0u4CTsmwbhDbtN8oUGKfYaWq2X/8yWipr+wzqpsbQ+ZmFY6c
+GFnSljkrTYpIdcVjFMxyGLwIdo0KF1LweemA1RzV3SZVOEL+vd7jvdOOCHXiisUfuyevkKYZ99Qr
+hVtSzhZ6pzIgF+vsgplAeEJeOybnTGfJ/WBY7sq2zWkrw1YfuTuozikpkDTHZ9uQsJITkfV/flAc
+IsqRTfuiHWzd6mMRUxgcITdXnXjrtue3oA/okA/6XDfotX3ko3LcG2sjokWQA93L2l8ciI3oVSX4
+cG8188+AID7TyxgqU1hLzBloX9KQ40Me4GHuYyWZVQtqUZQkW0k1HRS78wIDAQABoyEwHzAdBgNV
+HQ4EFgQUgi8SD2OSvyObXCSuEfb/4qLvjN4wDQYJKoZIhvcNAQELBQADggEBABcVE/zB3VdkeENT
+JQS/SLoIgt74LOxb8HZHHgzeRi/tipfoWDKvQ5K0WXbxZz3eGEN6ljZVcYZMDkn64sh4Mt4KJ0uk
+5lSvPPIwe1n+vP+uPeuZrPrGUZdFyxXcBI/5KJ6cBwG4Nc6L0jDfSw5afXnApcG4AG/+LwUc1YV6
+NTqqEOs1Q7uDmyZXRYfRbEJWzdb9sR2O0VYcza3nqULEeCl0xngqrZ/Vyi0v2M43rbyMMDjjbOSQ
+jOHVFRn+slpsjHsu+L5Ur2Zz42/Xv85m9zE6Q0sakAuR3CFfPn7E7IbiSJnsTSnFAH2q/P7QO0uO
+U5nbMWevwy1nPwlPTDOoW4w=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://dockerIp:8444/eportal/saml/SingleLogout"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://dockerIp:8444/eportal/saml/SingleLogout"/><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat><md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://dockerIp:8444/eportal/saml/SSO" index="0" isDefault="true"/><md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="http://dockerIp:8444/eportal/saml/SSO" index="1"/></md:SPSSODescriptor></md:EntityDescriptor>

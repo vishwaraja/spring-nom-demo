@@ -1,0 +1,140 @@
+uui:
+  extends:
+    file: services.yml
+    service: uui
+  links:
+  - appspg
+  - pm
+  - vertica
+  - estore
+  - nom-kafka
+  - condenser
+  - agg
+condenser:
+  extends:
+    file: services.yml
+    service: condenser
+  links:
+  - appspg
+  - cacheserve
+  - pm
+  - agg
+  - proxy
+agg:
+  extends:
+    file: services.yml
+    service: agg
+appspg:
+  extends:
+    file: services.yml
+    service: appspg
+pm:
+  extends:
+    file: services.yml
+    service: pm
+  links:
+  - vertica
+  - pmpg
+  - nom-kafka
+provisioner:
+  extends:
+    file: services.yml
+    service: provisioner
+  links:
+  - pmpg
+pmpg:
+  extends:
+    file: services.yml
+    service: pmpg
+vertica:
+  extends:
+    file: services.yml
+    service: vertica
+loader:
+  extends:
+    file: services.yml
+    service: loader
+  links:
+  - nom-kafka
+  - vertica
+nom-kafka:
+  extends:
+    file: services.yml
+    service: nom-kafka
+cacheserve:
+  extends:
+    file: services.yml
+    service: cacheserve
+  links:
+  - provisioner
+  - proxy
+  - nom-kafka
+  - agg
+proxy:
+  extends:
+    file: services.yml
+    service: proxy
+  links:
+  - provisioner
+  - nom-kafka
+eportal:
+  extends:
+    file: services.yml
+    service: eportal
+  links:
+  - pm
+  - vertica
+  - ssm
+estore:
+  extends:
+    file: services.yml
+    service: estore
+ssm:
+  extends:
+    file: services.yml
+    service: ssm
+  links:
+  - pm
+  - vertica
+  - nom-kafka
+iptracker:
+  extends:
+    file: services.yml
+    service: iptracker
+  links:
+  - nom-kafka
+  - vertica
+campaign-authenticity-api:
+  extends:
+    file: services.yml
+    service: campaign-authenticity-api
+#preferencecenterdemo:
+#  image: docker.nominum.com/preference-center-demo
+#  links:
+#  - pm
+#  - uui
+#  ports:
+#  - "1337:1337"
+#freeradius:
+#  build: freeradius
+#  ports:
+#  - "1812:1812/udp"
+#  - "1813:1813/udp"
+#  - "1814:1814/udp"
+#  - "18120:18120/udp"
+##LDAP##openldap:
+##LDAP##  build: openldap
+##LDAP##  ports:
+##LDAP##  - "389:389"
+##LDAP##  - "8389:80"
+##SSO##idp.shibboleth.com:
+##SSO##  links:
+##SSO##  - openldap
+##SSO##  build: shibboleth
+##SSO##  ports:
+##SSO##  - "8446:8443"
+##SSO##  - "8448:8080"
+##SSO##  environment:
+##SSO##  - HOST=${HOST}
+##SSO##  - DOCKER_HOST=${DOCKER_HOST}
+##SSO##  hostname: idp.shibboleth.com
