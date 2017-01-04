@@ -36,21 +36,19 @@ public class CreateEnvironmentController {
     @PostMapping(value="/environment",produces =MediaType.TEXT_PLAIN)
     public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
+        String currentUserName = authentication.getName();
         
 
-        Configuration configuration = Configuration.fromPostParams(environment.getDriver(),environment.getVersion(),environment.getVmName(),environment.getUserName());
+        Configuration configuration = Configuration.fromPostParams(
+                environment.getDriver(),
+                environment.getVersion(),
+                environment.getVmName(),
+                currentUserName);
         StreamingResponseBody response =executor.execute(configuration);
         return response;
-        //return "result";
-    }
-
-    @RequestMapping(value = "/hellovish", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN)
-    public ModelAndView index() {
-        Environment env =new Environment();
-        return new ModelAndView("hellovish","environment",env);
 
     }
+
 
 
     @RequestMapping(value="/create",method = RequestMethod.POST,produces = MediaType.TEXT_PLAIN)
