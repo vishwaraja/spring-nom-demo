@@ -21,27 +21,8 @@
 </head>
 <body>
 <div id="page">
-    <header id="header">
-        <div id="header-inner">
-            <div id="logo">
-                <img th:src="@{logo_header.svg}"/>
-            </div>
-            <div id="top-nav">
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Help</a></li>
-                </ul>
-            </div>
-            <div class="clr"></div>
-        </div>
+    <header th:replace="fragments/header" id="header">
     </header>
-    <div class="feature">
-        <div class="feature-inner">
-        </div>
-    </div>
-
 
     <div id="content">
         <div id="content-inner">
@@ -49,11 +30,6 @@
             <main id="contentbar">
                 <div class="article">
                     <form style="display: table" method="post">
-                        <p style="display: table-row">
-                            <label style="display: table-cell">User Name:</label>
-                            <input id="user-name" style="display: table-cell" type="text" value="jack"/>
-                        </p>
-
                         <p style="display: table-row">
                             <label style="display: table-cell">Driver:</label>
                             <select>
@@ -67,18 +43,6 @@
                                 <option>16-2</option>
                             </select>
                         </p>
-
-                        <p style="display: table-row">
-                            <label style="display: table-cell">Vm Name:</label>
-                            <input id = "vm-name" style="display: table-cell" type="text" value="uui"/>
-                        </p>
-
-
-                        <!--<p>User Name: <input type="text" th:field="*{userName}" value="jack" /></p>-->
-                        <!--<p>Driver: <input type="text" th:field="*{driver}" value="google" /></p>-->
-                        <!--<p>Version: <input type="text" th:field="*{version}" value="16-2"/></p>-->
-                        <!--<p>VM Name: <input type="text" th:field="*{vmName}" value="uui"/></p>-->
-
                         <p style="display: table-row">
                             <input id="submit" style="display: table-cell" type="submit" value="Submit"/>
                             <input id="reset" style="display: table-cell" type="reset" value="Reset"/>
@@ -90,43 +54,16 @@
                 </div>
             </main>
 
-            <nav id="sidebar">
-                <div class="widget">
-                    <h3>Left heading</h3>
-                    <ul>
-                        <li><a href="#">Link 1</a></li>
-                        <li><a href="#">Link 2</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                        <li><a href="#">Link 4</a></li>
-                        <li><a href="#">Link 5</a></li>
-                    </ul>
-                </div>
+            <nav th:replace="fragments/sidebar" id="sidebar">
             </nav>
 
             <div class="clr"></div>
         </div>
     </div>
 
-    <div id="footerblurb">
-        <div id="footerblurb-inner">
 
 
-            <div class="column">
-
-
-            </div>
-
-            <div class="clr"></div>
-        </div>
-    </div>
-
-    <footer id="footer">
-        <div id="footer-inner">
-            <p>&copy; Copyright <a href="#">Nominum</a> &#124; <a href="#">Terms of Use</a> &#124; <a href="#">Privacy
-                Policy</a></p>
-
-            <div class="clr"></div>
-        </div>
+    <footer th:replace="fragments/footer" id="footer">
     </footer>
 
 </div>
@@ -140,10 +77,8 @@ $(document).ready(function() {
         e.stopPropagation();
         e.preventDefault();
         $.post("/environment", {
-            userName: $("#user-name").val(),
             driver: $('#driver').val(),
-            version: $('#version').val(),
-            vmName: $('#vm-name').val()
+            version: $('#version').val()
         }).then(function(response){
             // TODO - set up a stream here. First param is the stream text.
             $('#vm-status pre').html(response)
