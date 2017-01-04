@@ -223,6 +223,7 @@ img {
 
 * {
     margin: 0;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -231,8 +232,7 @@ html, body {
 
 .wrapper {
     min-height: 100%;
-    height: auto !important;
-    height: 100%;
+    height: auto;
     margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 }
 
@@ -244,4 +244,12 @@ html, body {
     max-height: 300px;
     overflow-y: scroll;
     color: black;
+}
+
+table {
+}
+td {
+    padding: 0px 5px;
+}
+thead td {
 }

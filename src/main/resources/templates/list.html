@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Docker VMs</title>
+    <link rel="stylesheet" type="text/css" th:href="@{hello.css}"/>
+</head>
+<body>
+<div id="page">
+    <header th:replace="fragments/header" id="header">
+    </header>
+
+    <div id="content">
+        <div id="content-inner">
+
+            <main id="contentbar">
+                <table>
+                    <thead>
+                        <tr><td>name</td><td>something else</td><td>I'm sorry, I forgot. They're in a meeting and I can't see the board</td></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </main>
+
+            <nav th:replace="fragments/sidebar" id="sidebar">
+            </nav>
+
+            <div class="clr"></div>
+        </div>
+    </div>
+
+
+
+    <footer th:replace="fragments/footer" id="footer">
+    </footer>
+
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+</body>
+</html>

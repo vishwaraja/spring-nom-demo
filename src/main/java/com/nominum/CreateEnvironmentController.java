@@ -2,6 +2,9 @@ package com.nominum;
 
 
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,7 +40,7 @@ public class CreateEnvironmentController {
     }
 
     @PostMapping(value = "/environment", produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
+    public ResponseEntity<String> environmentSubmit(@ModelAttribute Environment environment) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         Configuration configuration = Configuration.fromPostParams(
@@ -45,13 +48,15 @@ public class CreateEnvironmentController {
                 environment.getVersion(),
                 currentUserName);
         StreamingResponseBody response = executor.execute(configuration);
-        return response;
+        return ResponseEntity.ok("");
     }
 
-    @GetMapping(value = "/consolelogs",produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody consoleLogs() throws IOException {
+    @GetMapping(value = "/consolelogs")
+    public ResponseEntity<StreamingResponseBody> consoleLogs() throws IOException {
         consoleVmOutput = new ConsoleVmOutput();
-        return consoleVmOutput.getLogs();
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new org.springframework.http.MediaType("text", "event-stream"));
+        return new ResponseEntity(consoleVmOutput.getLogs(), headers, HttpStatus.OK);
     }
 
 

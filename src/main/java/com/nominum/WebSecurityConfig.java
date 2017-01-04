@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
             .and()
             .formLogin()
-                .defaultSuccessUrl("/environment")
+                .defaultSuccessUrl("/list")
                 .loginPage("/login")
                 .permitAll()
             .and()
@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final Properties users = new Properties();
         users.put("user", "pass,ADMIN,enabled");
         users.put("jack", "yoyo,USER,enabled");
+        users.put("phil", "pass,ADMIN,enabled");
         return new InMemoryUserDetailsManager(users);
     }
 }
