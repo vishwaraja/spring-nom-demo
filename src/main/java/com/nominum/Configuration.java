@@ -10,7 +10,11 @@ import java.util.List;
 
 public class Configuration {
 
-    public static Configuration fromPostParams(String driver,String version,String vmName,String userName){
+    private List<Command> commands;
+    private String driverType;
+    private String version;
+
+    public static Configuration fromPostParams(String driver, String version, String vmName, String userName) {
 
 
         //File resourcesDirectory = new File("src/main/resources");
@@ -18,15 +22,15 @@ public class Configuration {
 
         URL path = Configuration.class
                 .getClassLoader().getResource("machineStorage");
-        String machineStoragePath=path.getPath();
+        String machineStoragePath = path.getPath();
 
         Configuration c = new Configuration();
 
-        if (driver.equals("google")){
+        if (driver.equals("google")) {
 
             DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
                     .command("create")
-                    .storagePath(machineStoragePath +"/" + userName)
+                    .storagePath(machineStoragePath + "/" + userName)
                     .driver("google")
                     .googleProject("nominum-docker-machines")
                     .googleMachineType("n1-standard-4")
@@ -39,43 +43,42 @@ public class Configuration {
             DockerMachineCommand dockerMachineIp = new DockerMachineCommand.Builder()
                     .command("ip")
                     .driver("google")
-                    .storagePath(machineStoragePath+ "/" + userName)
+                    .storagePath(machineStoragePath + "/" + userName)
                     .vmName(vmName)
                     .build();
 
 
-
-            DockerCommand dockerCommand=new DockerCommand.Builder()
+            DockerCommand dockerCommand = new DockerCommand.Builder()
                     .command("login")
                     .registryUser("nominum")
                     .port("2376")
                     .registryPassword("darthVaderForTrump2020")
                     .tlsCacert(machineStoragePath + "/" + userName + "/machines/" + vmName + "/ca.pem")
-                    .tlsCert(machineStoragePath + "/" +userName + "/machines/" + vmName + "/cert.pem")
-                    .tlsKey(machineStoragePath +"/"+ userName + "/machines/" + vmName + "/key.pem")
+                    .tlsCert(machineStoragePath + "/" + userName + "/machines/" + vmName + "/cert.pem")
+                    .tlsKey(machineStoragePath + "/" + userName + "/machines/" + vmName + "/key.pem")
                     .build();
             DockerMachineCommand dockerMachineIp2 = new DockerMachineCommand.Builder()
                     .command("ip")
                     .driver("google")
-                    .storagePath(machineStoragePath+ "/" + userName)
+                    .storagePath(machineStoragePath + "/" + userName)
                     .vmName(vmName)
                     .build();
 
             URL composePath = Configuration.class
                     .getClassLoader().getResource("docker/16-2");
-            String ymlPath=composePath.getPath()+"/"+"docker-compose.yml";
+            String ymlPath = composePath.getPath() + "/" + "docker-compose.yml";
 
-            DockerComposeCommand dockerComposeCommand =new DockerComposeCommand.Builder()
+            DockerComposeCommand dockerComposeCommand = new DockerComposeCommand.Builder()
                     .command("up")
                     .port("2376")
                     .yml(ymlPath)
-                    .tlsCacert(machineStoragePath +"/" +userName+"/machines/"+vmName+"/ca.pem")
+                    .tlsCacert(machineStoragePath + "/" + userName + "/machines/" + vmName + "/ca.pem")
                     .tlsCert(machineStoragePath + "/" + userName + "/machines/" + vmName + "/cert.pem")
                     .tlsKey(machineStoragePath + "/" + userName + "/machines/" + vmName + "/key.pem")
                     .build();
 
 
-            c.commands= new ArrayList<>();
+            c.commands = new ArrayList<>();
             c.commands.add(dockerMachineCommand);
             c.commands.add(dockerMachineIp);
             c.commands.add(dockerCommand);
@@ -88,15 +91,11 @@ public class Configuration {
 //                    .
 //
 //        }
-        c.driverType =driver;
+        c.driverType = driver;
         c.version = version;
         return c;
 
     }
-
-    private List<Command> commands;
-    private String driverType;
-    private String version;
 
     public List<Command> getCommands() {
         return commands;

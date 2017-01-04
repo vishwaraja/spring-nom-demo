@@ -1,23 +1,26 @@
 package com.nominum;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Map;
 
 /**
  * Created by vpathi on 12/19/16.
  */
-public abstract class Command  {
+public abstract class Command {
 
+    protected String lastCommandOutput;
     private String output;
     private Process process;
 
-    protected String lastCommandOutput;
-
     public abstract void stop();
+
     public abstract ProcessBuilder getProcessBuilder();
 
-    public String getOutput(){
+    public String getOutput() {
         return output;
     }
 
@@ -29,12 +32,12 @@ public abstract class Command  {
         ProcessBuilder processBuilder = getProcessBuilder();
         Map<String, String> envs = processBuilder.environment();
         envs.put("PATH", "/usr/local/bin/");
-        envs.put("GOOGLE_APPLICATION_CREDENTIALS",googleCredentials.getPath());
-        if (lastCommandOutput!=null && !lastCommandOutput.isEmpty()){
-            envs.put("DOCKER_HOST","tcp://"+lastCommandOutput.trim()+":2375");
+        envs.put("GOOGLE_APPLICATION_CREDENTIALS", googleCredentials.getPath());
+        if (lastCommandOutput != null && !lastCommandOutput.isEmpty()) {
+            envs.put("DOCKER_HOST", "tcp://" + lastCommandOutput.trim() + ":2375");
         }
         System.out.println("DEBUG: Command executing: " + processBuilder.command().toString());
-        System.out.println("DEBUG:"+lastCommandOutput);
+        System.out.println("DEBUG:" + lastCommandOutput);
         processBuilder.redirectErrorStream(true);
         processBuilder.redirectOutput();
         process = processBuilder.start();
@@ -45,7 +48,8 @@ public abstract class Command  {
         try {
             while ((line = input.readLine()) != null) {
                 stringBuilder.append(line + '\n');
-                os.write((line + '\n').getBytes());
+                //If streaming back HTML swap \n with <br/>
+                os.write((line + "\n").getBytes());
                 os.flush();
             }
         } finally {

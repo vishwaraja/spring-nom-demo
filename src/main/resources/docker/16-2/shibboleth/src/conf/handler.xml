@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ph:ProfileHandlerGroup xmlns:ph="urn:mace:shibboleth:2.0:idp:profile-handler" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<ph:ProfileHandlerGroup xmlns:ph="urn:mace:shibboleth:2.0:idp:profile-handler"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         xsi:schemaLocation="urn:mace:shibboleth:2.0:idp:profile-handler classpath:/schema/shibboleth-2.0-idp-profile-handler.xsd">
 
     <!-- Error Handler -->
@@ -14,27 +15,29 @@
     <ph:ProfileHandler xsi:type="ph:Status">
         <ph:RequestPath>/Status</ph:RequestPath>
     </ph:ProfileHandler>
-    
+
     <ph:ProfileHandler xsi:type="ph:SAMLMetadata" metadataFile="/opt/shibboleth-idp/metadata/idp-metadata.xml">
         <ph:RequestPath>/Metadata/SAML</ph:RequestPath>
-    </ph:ProfileHandler>    
+    </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:ShibbolethSSO" inboundBinding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" 
+    <ph:ProfileHandler xsi:type="ph:ShibbolethSSO" inboundBinding="urn:mace:shibboleth:1.0:profiles:AuthnRequest"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:1.0:profiles:browser-post
                                                    urn:oasis:names:tc:SAML:1.0:profiles:artifact-01">
         <ph:RequestPath>/Shibboleth/SSO</ph:RequestPath>
     </ph:ProfileHandler>
-    
-    <ph:ProfileHandler xsi:type="ph:SAML1AttributeQuery" inboundBinding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"
+
+    <ph:ProfileHandler xsi:type="ph:SAML1AttributeQuery"
+                       inboundBinding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding">
         <ph:RequestPath>/SAML1/SOAP/AttributeQuery</ph:RequestPath>
     </ph:ProfileHandler>
-    
-    <ph:ProfileHandler xsi:type="ph:SAML1ArtifactResolution" inboundBinding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding" 
+
+    <ph:ProfileHandler xsi:type="ph:SAML1ArtifactResolution"
+                       inboundBinding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding">
         <ph:RequestPath>/SAML1/SOAP/ArtifactResolution</ph:RequestPath>
     </ph:ProfileHandler>
-    
+
     <ph:ProfileHandler xsi:type="ph:SAML2SSO" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
@@ -42,7 +45,7 @@
         <ph:RequestPath>/SAML2/POST/SSO</ph:RequestPath>
     </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:SAML2SSO" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" 
+    <ph:ProfileHandler xsi:type="ph:SAML2SSO" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact">
@@ -56,14 +59,14 @@
         <ph:RequestPath>/SAML2/Redirect/SSO</ph:RequestPath>
     </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:SAML2SSO" inboundBinding="urn:mace:shibboleth:2.0:profiles:AuthnRequest" 
+    <ph:ProfileHandler xsi:type="ph:SAML2SSO" inboundBinding="urn:mace:shibboleth:2.0:profiles:AuthnRequest"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact">
         <ph:RequestPath>/SAML2/Unsolicited/SSO</ph:RequestPath>
     </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:SAML2ECP" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
+    <ph:ProfileHandler xsi:type="ph:SAML2ECP" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:SOAP">
         <ph:RequestPath>/SAML2/SOAP/ECP</ph:RequestPath>
     </ph:ProfileHandler>
@@ -84,7 +87,7 @@
         <ph:RequestPath>/SAML2/POST/SLO</ph:RequestPath>
     </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:SAML2SLO" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" 
+    <ph:ProfileHandler xsi:type="ph:SAML2SLO" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
                                                    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
@@ -96,29 +99,29 @@
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:SOAP">
         <ph:RequestPath>/SAML2/SOAP/SLO</ph:RequestPath>
     </ph:ProfileHandler>
-    
+
     <ph:ProfileHandler xsi:type="ph:SAML2SLO" inboundBinding="urn:mace:shibboleth:2.0:profiles:LocalLogout">
-          <ph:RequestPath>/Logout</ph:RequestPath>
-          <!--<ph:RequestPath>/SAML2/Redirect/SLO</ph:RequestPath>  -->
-          <!--<ph:RequestPath>/SAML2/POST/SLO</ph:RequestPath> -->
+        <ph:RequestPath>/Logout</ph:RequestPath>
+        <!--<ph:RequestPath>/SAML2/Redirect/SLO</ph:RequestPath>  -->
+        <!--<ph:RequestPath>/SAML2/POST/SLO</ph:RequestPath> -->
     </ph:ProfileHandler>
 
-    <ph:ProfileHandler xsi:type="ph:SAML2AttributeQuery" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
+    <ph:ProfileHandler xsi:type="ph:SAML2AttributeQuery" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:SOAP">
         <ph:RequestPath>/SAML2/SOAP/AttributeQuery</ph:RequestPath>
     </ph:ProfileHandler>
 
 
-    <ph:ProfileHandler xsi:type="ph:SAML2ArtifactResolution" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
+    <ph:ProfileHandler xsi:type="ph:SAML2ArtifactResolution" inboundBinding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
                        outboundBindingEnumeration="urn:oasis:names:tc:SAML:2.0:bindings:SOAP">
         <ph:RequestPath>/SAML2/SOAP/ArtifactResolution</ph:RequestPath>
     </ph:ProfileHandler>
-    
+
     <!-- Login Handlers -->
     <ph:LoginHandler xsi:type="ph:RemoteUser">
         <ph:AuthenticationMethod>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</ph:AuthenticationMethod>
     </ph:LoginHandler>
-    
+
     <!-- Login handler that delegates the act of authentication to an external system. -->
     <!-- This login handler and the RemoteUser login handler will be merged in the next major release. -->
     <!--
@@ -127,15 +130,16 @@
         <ph:QueryParam name="foo" value="bar" />
     </ph:LoginHandler>
     -->
-    
+
     <!--  Username/password login handler -->
 
-    <ph:LoginHandler xsi:type="ph:UsernamePassword" 
-                  jaasConfigurationLocation="file:///opt/shibboleth-idp/conf/login.config">
-        <ph:AuthenticationMethod>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</ph:AuthenticationMethod>
+    <ph:LoginHandler xsi:type="ph:UsernamePassword"
+                     jaasConfigurationLocation="file:///opt/shibboleth-idp/conf/login.config">
+        <ph:AuthenticationMethod>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
+        </ph:AuthenticationMethod>
     </ph:LoginHandler>
 
-    
+
     <!-- 
         Removal of this login handler will disable SSO support, that is it will require the user to authenticate 
         on every request.

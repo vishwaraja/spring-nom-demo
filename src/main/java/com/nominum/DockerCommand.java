@@ -16,9 +16,12 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
     private String tlskey;
     private String port;
 
-    private DockerCommand(){}
+    private DockerCommand() {
+    }
 
-    public String getPort() { return port;}
+    public String getPort() {
+        return port;
+    }
 
     public String getTlscert() {
         return tlscert;
@@ -35,6 +38,7 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
     public String getTlskey() {
         return tlskey;
     }
+
     public String getCommand() {
         return command;
     }
@@ -65,56 +69,6 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
 
     }
 
-
-    public static class Builder{
-    DockerCommand instance;
-        public Builder(){
-            instance=new DockerCommand();
-        }
-        public Builder tlsKey (String tlskey){
-            instance.tlskey = tlskey;
-            return this;
-        }
-        public Builder tlsCacert (String tlscacert){
-            instance.tlscacert = tlscacert;
-            return this;
-        }
-
-        public Builder tlsVerify (String tlsverify){
-            instance.tlsverify = tlsverify;
-            return this;
-        }
-        public Builder port (String port){
-            instance.port = port;
-            return this;
-        }
-
-        public Builder tlsCert (String tlscert){
-            instance.tlscert = tlscert;
-            return this;
-        }
-        public Builder command (String command){
-            instance.command = command;
-            return this;
-        }
-        public Builder registryUser(String registryUser){
-            instance.registryUser = registryUser;
-            return this;
-        }
-        public Builder registryPassword (String registryPassword){
-            instance.registryPassword = registryPassword;
-            return this;
-        }
-        public DockerCommand build() {
-            return instance;
-        }
-        public static DockerCommand from(Builder builder) {
-            
-            return builder.build();
-        }
-
-    }
-
     @Override
     public void stop() {
 
@@ -126,28 +80,86 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
         URL path = DockerCommand.class
                 .getClassLoader().getResource("binaries/docker");
 
-        String docker  = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
+        String docker = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
 
 
         return new ProcessBuilder().command(
                 DockerCommandLineConstants.SHELL,
                 DockerCommandLineConstants.SHELL_PARAM,
-                docker+" "+
-                DockerCommandLineConstants.HOSTNAME+" "+
-                        "tcp://"+this.lastCommandOutput.trim()+":"+this.port+" "+
-                DockerCommandLineConstants.TLSVERIFY+" "+
-                DockerCommandLineConstants.TLSCACERT+" "+
-                        this.tlscacert+" "+
-                DockerCommandLineConstants.TLSCERT+" "+
-                        this.tlscert+" "+
-                DockerCommandLineConstants.TLSKEY+" "+
-                        this.tlskey+" "+
-                        this.command+" "+
-                DockerCommandLineConstants.REGISTRY_USER_PARAM+" "+
-                        this.registryUser+" "+
-                DockerCommandLineConstants.REGISTRY_PASSWORD_PARAM+" "+
+                docker + " " +
+                        DockerCommandLineConstants.HOSTNAME + " " +
+                        "tcp://" + this.lastCommandOutput.trim() + ":" + this.port + " " +
+                        DockerCommandLineConstants.TLSVERIFY + " " +
+                        DockerCommandLineConstants.TLSCACERT + " " +
+                        this.tlscacert + " " +
+                        DockerCommandLineConstants.TLSCERT + " " +
+                        this.tlscert + " " +
+                        DockerCommandLineConstants.TLSKEY + " " +
+                        this.tlskey + " " +
+                        this.command + " " +
+                        DockerCommandLineConstants.REGISTRY_USER_PARAM + " " +
+                        this.registryUser + " " +
+                        DockerCommandLineConstants.REGISTRY_PASSWORD_PARAM + " " +
                         this.registryPassword
         );
+
+    }
+
+    public static class Builder {
+        DockerCommand instance;
+
+        public Builder() {
+            instance = new DockerCommand();
+        }
+
+        public static DockerCommand from(Builder builder) {
+
+            return builder.build();
+        }
+
+        public Builder tlsKey(String tlskey) {
+            instance.tlskey = tlskey;
+            return this;
+        }
+
+        public Builder tlsCacert(String tlscacert) {
+            instance.tlscacert = tlscacert;
+            return this;
+        }
+
+        public Builder tlsVerify(String tlsverify) {
+            instance.tlsverify = tlsverify;
+            return this;
+        }
+
+        public Builder port(String port) {
+            instance.port = port;
+            return this;
+        }
+
+        public Builder tlsCert(String tlscert) {
+            instance.tlscert = tlscert;
+            return this;
+        }
+
+        public Builder command(String command) {
+            instance.command = command;
+            return this;
+        }
+
+        public Builder registryUser(String registryUser) {
+            instance.registryUser = registryUser;
+            return this;
+        }
+
+        public Builder registryPassword(String registryPassword) {
+            instance.registryPassword = registryPassword;
+            return this;
+        }
+
+        public DockerCommand build() {
+            return instance;
+        }
 
     }
 }

@@ -37,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -48,8 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         final Properties users = new Properties();
-        users.put("user","pass,ADMIN,enabled");
-        users.put("jack","yoyo,USER,enabled");
+        users.put("user", "pass,ADMIN,enabled");
+        users.put("jack", "yoyo,USER,enabled");
         return new InMemoryUserDetailsManager(users);
     }
 }

@@ -18,7 +18,9 @@ public class DockerComposeCommand
     private String tlskey;
 
     // No-op constructor for builder
-    private DockerComposeCommand(){}
+    private DockerComposeCommand() {
+    }
+
     public String getTlscert() {
         return tlscert;
     }
@@ -52,42 +54,83 @@ public class DockerComposeCommand
         lastCommandOutput = lastOutput;
     }
 
-    public static class Builder{
+    @Override
+    public ProcessBuilder getProcessBuilder() {
+        URL path = DockerComposeCommand.class
+                .getClassLoader().getResource("binaries/docker-compose");
+        String compose = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
+
+
+        return new ProcessBuilder().command(
+
+                DockerComposeCommandLineConstants.SHELL,
+                DockerComposeCommandLineConstants.SHELL_PARAM,
+                compose + " " +
+                        DockerComposeCommandLineConstants.FILE_PARAM + " " +
+                        this.yml + " " +
+                        DockerComposeCommandLineConstants.HOSTNAME + " " +
+                        "tcp://" + this.lastCommandOutput.trim() + ":" + this.port + " " +
+                        DockerComposeCommandLineConstants.TLSVERIFY + " " +
+                        DockerComposeCommandLineConstants.TLSCACERT + " " +
+                        this.tlscacert + " " +
+                        DockerComposeCommandLineConstants.TLSCERT + " " +
+                        this.tlscert + " " +
+                        DockerComposeCommandLineConstants.TLSKEY + " " +
+                        this.tlskey + " " +
+                        this.command + " " +
+                        DockerComposeCommandLineConstants.DETACH);
+
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    public static class Builder {
         DockerComposeCommand instance;
 
-        public Builder(){
+        public Builder() {
             instance = new DockerComposeCommand();
 
         }
-        public Builder tlsKey (String tlskey){
+
+        public static DockerComposeCommand from(Builder builder) {
+            return builder.build();
+        }
+
+        public Builder tlsKey(String tlskey) {
             instance.tlskey = tlskey;
             return this;
         }
-        public Builder tlsCacert (String tlscacert){
+
+        public Builder tlsCacert(String tlscacert) {
             instance.tlscacert = tlscacert;
             return this;
         }
 
-        public Builder tlsVerify (String tlsverify){
+        public Builder tlsVerify(String tlsverify) {
             instance.tlsverify = tlsverify;
             return this;
         }
 
-        public Builder tlsCert (String tlscert){
+        public Builder tlsCert(String tlscert) {
             instance.tlscert = tlscert;
             return this;
         }
 
-        public Builder port (String port){
+        public Builder port(String port) {
             instance.port = port;
             return this;
         }
-        public Builder yml (String yml){
+
+        public Builder yml(String yml) {
             instance.yml = yml;
             return this;
         }
 
-        public Builder command (String command){
+        public Builder command(String command) {
             instance.command = command;
             return this;
         }
@@ -96,45 +139,6 @@ public class DockerComposeCommand
             //validateUserObject(dockerMachineCommand);
             return instance;
         }
-        public static DockerComposeCommand from(Builder builder) {
-            return builder.build();
-        }
-
-    }
-
-
-    @Override
-    public ProcessBuilder getProcessBuilder() {
-        URL path = DockerComposeCommand.class
-                .getClassLoader().getResource("binaries/docker-compose");
-        String compose  = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
-
-
-
-        return new ProcessBuilder().command(
-
-                DockerComposeCommandLineConstants.SHELL,
-                DockerComposeCommandLineConstants.SHELL_PARAM,
-                compose+" "+
-                DockerComposeCommandLineConstants.FILE_PARAM+ " "+
-                        this.yml+ " "+
-                DockerComposeCommandLineConstants.HOSTNAME+" "+
-                        "tcp://"+this.lastCommandOutput.trim()+":"+this.port+" "+
-                DockerComposeCommandLineConstants.TLSVERIFY+" "+
-                DockerComposeCommandLineConstants.TLSCACERT+" "+
-                        this.tlscacert+" "+
-                DockerComposeCommandLineConstants.TLSCERT+" "+
-                        this.tlscert+" "+
-                DockerComposeCommandLineConstants.TLSKEY+" "+
-                        this.tlskey+" "+
-                        this.command+" "+
-                DockerComposeCommandLineConstants.DETACH);
-
-
-    }
-
-    @Override
-    public void stop() {
 
     }
 
