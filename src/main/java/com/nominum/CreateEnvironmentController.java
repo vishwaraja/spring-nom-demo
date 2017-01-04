@@ -6,10 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 
 /**
  * Created by vpathi on 12/20/16.
@@ -18,10 +21,13 @@ import javax.ws.rs.core.MediaType;
 public class CreateEnvironmentController {
 
     private Executor executor;
+    private ConsoleVmOutput consoleVmOutput;
     private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     public CreateEnvironmentController() {
         executor = new Executor();
+    //    consoleVmOutput = new ConsoleVmOutput();
+
     }
 
     @GetMapping("/environment")
@@ -42,15 +48,14 @@ public class CreateEnvironmentController {
         return response;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody createStack(@RequestParam(value = "driver-type") String driver,
-                                             @RequestParam(value = "version") String version,
-                                             @RequestParam(value = "vmname") String vmname,
-                                             @RequestParam(value = "username") String userName) {
-
-        Configuration configuration = Configuration.fromPostParams(driver, version, userName);
-        return executor.execute(configuration);
+    @GetMapping(value = "/consolelogs",produces = MediaType.TEXT_PLAIN)
+    public StreamingResponseBody consoleLogs() throws IOException {
+        consoleVmOutput = new ConsoleVmOutput();
+        return consoleVmOutput.getLogs();
     }
+
+
+
 
 
 }
