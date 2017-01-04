@@ -48,26 +48,25 @@
 
             <main id="contentbar">
                 <div class="article">
-                    <form style="display: table" action="#" th:action="@{/environment}" th:object="${environment}"
-                          method="post">
+                    <form style="display: table" method="post">
                         <p style="display: table-row">
                             <label style="display: table-cell">User Name:</label>
-                            <input style="display: table-cell" type="text" th:field="*{userName}" value="jack"/>
+                            <input id="user-name" style="display: table-cell" type="text" value="jack"/>
                         </p>
 
                         <p style="display: table-row">
                             <label style="display: table-cell">Driver:</label>
-                            <input style="display: table-cell" type="text" th:field="*{driver}" value="google"/>
+                            <input id="driver" style="display: table-cell" type="text" value="google"/>
                         </p>
 
                         <p style="display: table-row">
                             <label style="display: table-cell">Version:</label>
-                            <input style="display: table-cell" type="text" th:field="*{version}" value="16-2"/>
+                            <input id = "version" style="display: table-cell" type="text" value="16-2"/>
                         </p>
 
                         <p style="display: table-row">
                             <label style="display: table-cell">Vm Name:</label>
-                            <input style="display: table-cell" type="text" th:field="*{vmName}" value="uui"/>
+                            <input id = "vm-name" style="display: table-cell" type="text" value="uui"/>
                         </p>
 
 
@@ -77,10 +76,13 @@
                         <!--<p>VM Name: <input type="text" th:field="*{vmName}" value="uui"/></p>-->
 
                         <p style="display: table-row">
-                            <input style="display: table-cell" type="submit" value="Submit"/>
-                            <input style="display: table-cell" type="reset" value="Reset"/>
+                            <input id="submit" style="display: table-cell" type="submit" value="Submit"/>
+                            <input id="reset" style="display: table-cell" type="reset" value="Reset"/>
                         </p>
                     </form>
+                </div>
+                <div id="vm-status">
+                    <pre></pre>
                 </div>
             </main>
 
@@ -124,5 +126,27 @@
     </footer>
 
 </div>
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#submit").click(function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        $.post("/environment", {
+            userName: $("#user-name").val(),
+            driver: $('#driver').val(),
+            version: $('#version').val(),
+            vmName: $('#vm-name').val()
+        }).then(function(response){
+            // TODO - set up a stream here. First param is the stream text.
+            debugger;
+            $('#vm-status pre').html(response)
+        });
+    })
+});
+</script>
 </body>
 </html>

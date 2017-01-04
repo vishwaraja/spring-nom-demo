@@ -239,3 +239,9 @@ html, body {
 .footer, .push {
     height: 142px; /* .push must be the same height as .footer */
 }
+
+#vm-status {
+    max-height: 300px;
+    overflow-y: scroll;
+    color: black;
+}
