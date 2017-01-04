@@ -14,7 +14,7 @@ public class Configuration {
     private String driverType;
     private String version;
 
-    public static Configuration fromPostParams(String driver, String version, String vmName, String userName) {
+    public static Configuration fromPostParams(String driver, String version, String userName) {
 
 
         //File resourcesDirectory = new File("src/main/resources");
@@ -23,6 +23,7 @@ public class Configuration {
         URL path = Configuration.class
                 .getClassLoader().getResource("machineStorage");
         String machineStoragePath = path.getPath();
+        String vmName=userName+version;
 
         Configuration c = new Configuration();
 
@@ -86,13 +87,7 @@ public class Configuration {
             c.commands.add(dockerComposeCommand);
 
         }
-//        else if(driver.equals("local")){
-//            DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
-//                    .
-//
-//        }
-        c.driverType = driver;
-        c.version = version;
+
         return c;
 
     }

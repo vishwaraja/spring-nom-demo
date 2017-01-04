@@ -37,7 +37,6 @@ public class CreateEnvironmentController {
         Configuration configuration = Configuration.fromPostParams(
                 environment.getDriver(),
                 environment.getVersion(),
-                environment.getVmName(),
                 currentUserName);
         StreamingResponseBody response = executor.execute(configuration);
         return response;
@@ -49,7 +48,7 @@ public class CreateEnvironmentController {
                                              @RequestParam(value = "vmname") String vmname,
                                              @RequestParam(value = "username") String userName) {
 
-        Configuration configuration = Configuration.fromPostParams(driver, version, vmname, userName);
+        Configuration configuration = Configuration.fromPostParams(driver, version, userName);
         return executor.execute(configuration);
     }
 

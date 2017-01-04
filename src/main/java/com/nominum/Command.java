@@ -1,11 +1,12 @@
 package com.nominum;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.io.*;
 import java.net.URL;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vpathi on 12/19/16.
@@ -17,6 +18,10 @@ public abstract class Command {
     private Process process;
 
     public abstract void stop();
+    public String vmName;
+    public File dir;
+    public File file;
+
 
     public abstract ProcessBuilder getProcessBuilder();
 
@@ -25,9 +30,14 @@ public abstract class Command {
     }
 
     public void run(OutputStream os) throws IOException, InterruptedException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
         URL googleCredentials = DockerMachineCommandLineConstants.class
                 .getClassLoader().getResource("googleCredentials/nominum-docker-machines-cb3dc450e32f.json");
 
+        URL path = Configuration.class
+                .getClassLoader().getResource("machineStorage");
+        String machineStoragePath = path.getPath();
 
         ProcessBuilder processBuilder = getProcessBuilder();
         Map<String, String> envs = processBuilder.environment();
@@ -42,11 +52,22 @@ public abstract class Command {
         processBuilder.redirectOutput();
         process = processBuilder.start();
 
+
         String line;
+        TimeUnit.SECONDS.sleep(4);
+        String fileName = "consoleOuput";
+        vmName =currentUserName+"16-2";
+        dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
+        file = new File (dir, fileName);
+
+        PrintWriter writer = new PrintWriter(file, "UTF-8");
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         try {
             while ((line = input.readLine()) != null) {
+
+                writer.append(line+'\n');
+                writer.flush();
                 stringBuilder.append(line + '\n');
                 //If streaming back HTML swap \n with <br/>
                 os.write((line + "\n").getBytes());
@@ -54,6 +75,7 @@ public abstract class Command {
             }
         } finally {
             output = stringBuilder.toString();
+            writer.close();
         }
     }
 }
