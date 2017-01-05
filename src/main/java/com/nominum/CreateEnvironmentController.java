@@ -29,8 +29,6 @@ public class CreateEnvironmentController {
 
     public CreateEnvironmentController() {
         executor = new Executor();
-    //    consoleVmOutput = new ConsoleVmOutput();
-
     }
 
     @GetMapping("/environment")

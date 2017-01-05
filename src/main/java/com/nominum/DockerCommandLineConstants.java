@@ -1,11 +1,10 @@
 package com.nominum;
 
-import java.net.URL;
-
 /**
  * Created by vpathi on 1/1/17.
  */
 public class DockerCommandLineConstants {
+
     public static final String DOCKER = "/usr/local/bin/docker";
     public static final String HOSTNAME = "--host";
     public static final String SHELL = "/bin/bash";
@@ -18,7 +17,9 @@ public class DockerCommandLineConstants {
     public static final String TLSCACERT = "--tlscacert";
     public static final String TLSKEY = "--tlskey";
     public static final String SPACE = " ";
-    URL sqlScriptUrl = DockerCommandLineConstants.class
-            .getClassLoader().getResource("binaries/docker-machine");
-    ;
+    public static final String FORMAT = "--format";
+    public static final String VMNAME = "{{.Name}}";
+    public static final String URL = "{{.URL}}";
+    public static final String ACTIVE = "{{.Active}}";
+    public static final String STATE = "{{.State}}";
 }

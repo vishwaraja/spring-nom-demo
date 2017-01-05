@@ -1,7 +1,6 @@
 package com.nominum;
 
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +9,8 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import javax.ws.rs.WebApplicationException;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vpathi on 1/4/17.
@@ -26,11 +27,6 @@ public class ConsoleVmOutput {
     File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" + vmName + "/");
     File file = new File(dir, fileName);
 
-    public String getConsoleLogs() throws IOException {
-        String str = FileUtils.readFileToString(file);
-        return str;
-    }
-
     public StreamingResponseBody getLogs() {
 
 
@@ -38,6 +34,7 @@ public class ConsoleVmOutput {
             @Override
             public void writeTo(OutputStream output) throws IOException, WebApplicationException {
                 InputStream targetStream = new FileInputStream(file);
+                writePreHtml(output);
                 IOUtils.copy(targetStream, output);
             }
 
@@ -45,7 +42,33 @@ public class ConsoleVmOutput {
         };
         return stream;
     }
+
+    private void writeListToStream(List<String> list, OutputStream output) {
+        try {
+            for (String s : list) {
+                output.write(s.getBytes());
+            }
+            output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void writePreHtml(OutputStream output) {
+        List<String> preHtml = new ArrayList<>();
+        preHtml.add("data: ");
+
+        writeListToStream(preHtml, output);
+    }
+
+
+
+
 }
+
+
+
+
 
 
 
