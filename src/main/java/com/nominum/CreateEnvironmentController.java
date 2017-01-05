@@ -52,7 +52,7 @@ public class CreateEnvironmentController {
         return executor.execute(configuration);
     }
 
-    @GetMapping(value = "/consolelogs")
+    @GetMapping(value = "/console/logs")
     public ResponseEntity<StreamingResponseBody> consoleLogs() throws IOException {
         consoleVmOutput = new ConsoleVmOutput();
         final HttpHeaders headers = new HttpHeaders();

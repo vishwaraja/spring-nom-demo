@@ -69,7 +69,7 @@ $(document).ready(function() {
 
         });
 
-        var es = new EventSource("/consolelogs");
+        var es = new EventSource("/console/logs");
         es.onmessage = function(e){
             $('#vm-status pre').html(e.data
                             .replace(/\\n/g, "\n"));
