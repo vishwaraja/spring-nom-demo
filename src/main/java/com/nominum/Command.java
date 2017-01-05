@@ -54,7 +54,7 @@ public abstract class Command {
 
 
         String line;
-        TimeUnit.SECONDS.sleep(8);
+        TimeUnit.SECONDS.sleep(2);
         String fileName = "consoleOutput";
         vmName =currentUserName+"16-2";
         dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");

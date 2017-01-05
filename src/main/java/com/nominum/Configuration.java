@@ -121,20 +121,20 @@ public class Configuration {
         DockerMachineCommand ip = new DockerMachineCommand.Builder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName)
+                .filter(vmName.trim())
                 .format("url")
                 .build();
 
         DockerMachineCommand state = new DockerMachineCommand.Builder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName)
+                .filter(vmName.trim())
                 .format("state")
                 .build();
         DockerMachineCommand driver = new DockerMachineCommand.Builder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName)
+                .filter(vmName.trim())
                 .format("driver")
                 .build();
         configuration.commands = new ArrayList<>();

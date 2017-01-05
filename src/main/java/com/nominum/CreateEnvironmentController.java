@@ -81,7 +81,7 @@ public class CreateEnvironmentController {
             vmTableForm.setUrl(statusOutput.get(0));
             vmTableForm.setStatus(statusOutput.get(1));
             vmTableForm.setDriver(statusOutput.get(2));
-            mv.addObject("vmTableForms", vmTableForm);
+            mv.addObject("vmTableForm", vmTableForm);
 
             }
         return mv;

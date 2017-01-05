@@ -23,6 +23,7 @@ public class DockerMachineCommandLineConstants {
     public static final String URL = "{{.URL}}";
     public static final String ACTIVE = "{{.Active}}";
     public static final String STATE = "{{.State}}";
+    public static final String DRIVER_TYPE = "{{.DriverName}}";
 
 
 

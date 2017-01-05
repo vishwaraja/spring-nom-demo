@@ -8,6 +8,7 @@ public class VmTableForm {
     private String vmName;
     private String url;
     private String status;
+    private String driver;
 
     public String getDriver() {
         return driver;
@@ -17,7 +18,7 @@ public class VmTableForm {
         this.driver = driver;
     }
 
-    private String driver;
+
 
 
     public String getStatus() {

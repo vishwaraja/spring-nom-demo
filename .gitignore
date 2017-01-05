@@ -3,6 +3,7 @@
 
 .cloud-machines/
 resources/machineStorage/
+!src/main/resources/docker/
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml

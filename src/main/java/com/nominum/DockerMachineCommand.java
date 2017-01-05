@@ -288,7 +288,7 @@ public class DockerMachineCommand extends Command {
                             DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
                             this.filter+ " " +
                             DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.DRIVER);
+                            DockerMachineCommandLineConstants.DRIVER_TYPE);
         }
         return null;
 
