@@ -70,8 +70,10 @@ public abstract class Command {
                 writer.flush();
                 stringBuilder.append(line + '\n');
                 //If streaming back HTML swap \n with <br/>
-                os.write((line + "\n").getBytes());
-                os.flush();
+                if (os != null) {
+                    os.write((line + "\n").getBytes());
+                    os.flush();
+                }
             }
         } finally {
             output = stringBuilder.toString();

@@ -17,9 +17,15 @@ public class DockerMachineCommand extends Command {
     private String vmName;
     private String ip;
     private String storagePath;
+    private String filter;
+    private String format;
 
     // No-op constructor for builder
     private DockerMachineCommand() {
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public String getGoogleMachineImage() {
@@ -62,6 +68,16 @@ public class DockerMachineCommand extends Command {
         return vmName;
     }
 
+    public String getFilter() {
+        return filter;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+
+
     @Override
     public String toString() {
         return DockerMachineCommandLineConstants.SHELL + " " +
@@ -83,67 +99,6 @@ public class DockerMachineCommand extends Command {
                 this.vmName;
     }
 
-    @Override
-    public ProcessBuilder getProcessBuilder() {
-
-
-        URL path = DockerMachineCommand.class
-                .getClassLoader().getResource("binaries/docker-machine");
-        String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
-
-
-        if (this.driver.equals("google") && this.command.equals("create")) {
-
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " + "--debug  " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.DRIVER + " " +
-                            this.driver + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_PROJECT + " " +
-                            this.googleProject + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_TYPE + " " +
-                            this.googleMachineType + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_ZONE + " " +
-                            this.googleZone + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_DISK_SIZE + " " +
-                            this.googleDiskSize + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
-                            this.googleMachineImage + " " +
-                            this.vmName);
-        } else if (this.driver.equals("google") && this.command.equals("ip")) {
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            this.vmName);
-
-        }
-        else if(this.command.equals("rm -f")){
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            this.vmName);
-
-        }
-        return null;
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
 
     public static class Builder {
         DockerMachineCommand instance;
@@ -202,6 +157,15 @@ public class DockerMachineCommand extends Command {
             instance.vmName = vmName;
             return this;
         }
+        public Builder filter(String filter) {
+            instance.filter = filter;
+            return this;
+        }
+
+        public Builder format(String format) {
+            instance.format = format;
+            return this;
+        }
 
         public Builder ip(String ip) {
             instance.ip = ip;
@@ -213,6 +177,116 @@ public class DockerMachineCommand extends Command {
             return instance;
         }
     }
+
+
+
+    @Override
+    public ProcessBuilder getProcessBuilder() {
+        String WHITESPACE=" ";
+        URL path = DockerMachineCommand.class
+                .getClassLoader().getResource("binaries/docker-machine");
+        String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
+
+
+
+
+        if (this.driver.equals("google") && this.command.equals("create")) {
+
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " + "--debug  " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            DockerMachineCommandLineConstants.DRIVER + " " +
+                            this.driver + " " +
+                            DockerMachineCommandLineConstants.GOOGLE_PROJECT + " " +
+                            this.googleProject + " " +
+                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_TYPE + " " +
+                            this.googleMachineType + " " +
+                            DockerMachineCommandLineConstants.GOOGLE_ZONE + " " +
+                            this.googleZone + " " +
+                            DockerMachineCommandLineConstants.GOOGLE_DISK_SIZE + " " +
+                            this.googleDiskSize + " " +
+                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
+                            this.googleMachineImage + " " +
+                            this.vmName);
+        } else if (this.driver.equals("google") && this.command.equals("ip")) {
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            this.vmName);
+
+        }
+        else if(this.command.equals("rm -f")){
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            this.vmName);
+
+        }
+        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            DockerMachineCommandLineConstants.FILTER+ " " +
+                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
+                            this.filter+ " " +
+                            DockerMachineCommandLineConstants.FORMAT + " " +
+                            DockerMachineCommandLineConstants.URL);
+        }
+
+        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("state")){
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            DockerMachineCommandLineConstants.FILTER+ " " +
+                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
+                            this.filter+ " " +
+                            DockerMachineCommandLineConstants.FORMAT + " " +
+                            DockerMachineCommandLineConstants.STATE);
+        }
+        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("driver")){
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            DockerMachineCommandLineConstants.FILTER+ " " +
+                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
+                            this.filter+ " " +
+                            DockerMachineCommandLineConstants.FORMAT + " " +
+                            DockerMachineCommandLineConstants.DRIVER);
+        }
+        return null;
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+
 
 
 }

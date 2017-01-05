@@ -46,51 +46,27 @@ public class Executor {
         return stream;
     }
 
-    private void writePreHtml(OutputStream output) {
-        List<String> preHtml = new ArrayList<>();
-        preHtml.add("<html>");
-        preHtml.add("<body>");
-        preHtml.add("<b>");
-        preHtml.add("<font color=\"red\"");
-        writeListToStream(preHtml, output);
-    }
-
-    private void writePostHtml(OutputStream output) {
-        List<String> postHtml = new ArrayList<>();
-        postHtml.add("</font>");
-        postHtml.add("</b>");
-        postHtml.add("</body>");
-        postHtml.add("</html>");
-        writeListToStream(postHtml, output);
-    }
-
-    private void writeListToStream(List<String> list, OutputStream output) {
+    // Thea idea here is that:
+    // - read list of commands from configuration
+    // - execute each command, capture output as string
+    // - return a list of strings
+    public List<String> executeAsStringOutput(final Configuration configuration) {
+        List<String> listOfOutputs = new ArrayList<>(configuration.getCommands().size());
+        String lastCommandOutput = null;
         try {
-            for (String s : list) {
-                output.write(s.getBytes());
-            }
-            output.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void executeNew(final Configuration configuration, OutputStream os) throws IOException {
-        String lastCommandOutput = " ";
-        try {
-            for (Command c : configuration.getCommands()) {
+            for (Command c: configuration.getCommands()) {
                 if (c instanceof NeedsLastCommandOutput && lastCommandOutput != null) {
                     ((NeedsLastCommandOutput) c).setLastCommandOutput(lastCommandOutput);
                 }
-                c.run(os);
+                c.run(null);
                 lastCommandOutput = c.getOutput();
+                listOfOutputs.add(lastCommandOutput);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
-            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return listOfOutputs;
     }
 }

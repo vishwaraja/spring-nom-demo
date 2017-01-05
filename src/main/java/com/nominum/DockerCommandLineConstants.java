@@ -17,9 +17,5 @@ public class DockerCommandLineConstants {
     public static final String TLSCACERT = "--tlscacert";
     public static final String TLSKEY = "--tlskey";
     public static final String SPACE = " ";
-    public static final String FORMAT = "--format";
-    public static final String VMNAME = "{{.Name}}";
-    public static final String URL = "{{.URL}}";
-    public static final String ACTIVE = "{{.Active}}";
-    public static final String STATE = "{{.State}}";
+
 }

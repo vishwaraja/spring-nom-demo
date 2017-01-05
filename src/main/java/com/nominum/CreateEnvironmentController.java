@@ -1,21 +1,21 @@
 package com.nominum;
 
 
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by vpathi on 12/20/16.
@@ -25,7 +25,6 @@ public class CreateEnvironmentController {
 
     private Executor executor;
     private ConsoleVmOutput consoleVmOutput;
-    private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     public CreateEnvironmentController() {
 
@@ -43,12 +42,10 @@ public class CreateEnvironmentController {
 
     @PostMapping(value = "/environment", produces = MediaType.TEXT_PLAIN)
     public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
         Configuration configuration = Configuration.fromPostParams(
                 environment.getDriver(),
                 environment.getVersion(),
-                currentUserName);
+                getUserName());
         return executor.execute(configuration);
     }
 
@@ -62,13 +59,35 @@ public class CreateEnvironmentController {
 
     @PostMapping(value = "/delete/environment",produces = MediaType.TEXT_PLAIN)
     public StreamingResponseBody environmetSubmit(@ModelAttribute VmTableForm vmTableForm){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        currentUserName = authentication.getName();
         Configuration configuration = Configuration.deleteFromPostParams(
-                vmTableForm.getVmName(), currentUserName);
-
+                vmTableForm.getVmName(), getUserName());
         return executor.execute(configuration);
 
+    }
+
+
+    @GetMapping(value = "/vms/info", produces = MediaType.TEXT_PLAIN)
+    public ModelAndView getDockerMachineInfo() {
+
+        Configuration configuration = Configuration.forVmList(getUserName());
+        List<String> vms = executor.executeAsStringOutput(configuration);
+
+        ModelAndView mv = new ModelAndView("list");
+        for (String vm:vms){
+            Configuration vmConfig = Configuration.forVmListInfo(getUserName(),vm);
+            List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
+
+            VmTableForm vmTableForm = new VmTableForm();
+            vmTableForm.setUrl(statusOutput.get(0));
+            vmTableForm.setStatus(statusOutput.get(1));
+            vmTableForm.setDriver(statusOutput.get(2));
+            mv.addObject("vmTableForms", vmTableForm);
+
+            }
+        return mv;
+        }
+
+    private String getUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

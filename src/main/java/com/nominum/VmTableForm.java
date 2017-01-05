@@ -9,13 +9,16 @@ public class VmTableForm {
     private String url;
     private String status;
 
-    public String getUserName() {
-        return userName;
+    public String getDriver() {
+        return driver;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setDriver(String driver) {
+        this.driver = driver;
     }
+
+    private String driver;
+
 
     public String getStatus() {
         return status;

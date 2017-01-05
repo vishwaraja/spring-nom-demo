@@ -102,6 +102,48 @@ public class Configuration {
 
     }
 
+    public static Configuration forVmList(String userName) {
+        Configuration configuration = new Configuration();
+
+
+        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .build();
+        configuration.commands = new ArrayList<>();
+        configuration.commands.add(dockerMachineCommand);
+        return configuration;
+    }
+    public static Configuration forVmListInfo(String userName,String vmName) {
+
+        Configuration configuration = new Configuration();
+        DockerMachineCommand ip = new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .filter(vmName)
+                .format("url")
+                .build();
+
+        DockerMachineCommand state = new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .filter(vmName)
+                .format("state")
+                .build();
+        DockerMachineCommand driver = new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .filter(vmName)
+                .format("driver")
+                .build();
+        configuration.commands = new ArrayList<>();
+        configuration.commands.add(ip);
+        configuration.commands.add(state);
+        configuration.commands.add(driver);
+
+        return configuration;
+    }
+
 
 
 

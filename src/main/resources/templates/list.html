@@ -16,7 +16,11 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>name</td><td>something else</td><td>I'm sorry, I forgot. They're in a meeting and I can't see the board</td></tr>
+                        <tr><td>URL</td><td>Status</td><td>Driver</td></tr>
+                        <tr th:each="vmTableForm : ${vmTableForms}">
+                            <td th:text="${vmTableForms.name}"></td>
+
+                            A Smoke Test</tr>
                     </thead>
                     <tbody></tbody>
                 </table>
