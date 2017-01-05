@@ -7,6 +7,7 @@ import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,8 +19,6 @@ public class Executor {
         final StreamingResponseBody stream = new StreamingResponseBody() {
             @Override
             public void writeTo(OutputStream output) throws IOException, WebApplicationException {
-                //If client is unable to get streaming output then use this
-                //writePreHtml(output);
 
                 String lastCommandOutput = " ";
                 try {
@@ -37,8 +36,7 @@ public class Executor {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    //If client is unable to get streaming output then use this
-                    //writePostHtml(output);
+
                     output.close();
                 }
             }
@@ -46,10 +44,6 @@ public class Executor {
         return stream;
     }
 
-    // Thea idea here is that:
-    // - read list of commands from configuration
-    // - execute each command, capture output as string
-    // - return a list of strings
     public List<String> executeAsStringOutput(final Configuration configuration) {
         List<String> listOfOutputs = new ArrayList<>(configuration.getCommands().size());
         String lastCommandOutput = null;
@@ -59,7 +53,12 @@ public class Executor {
                     ((NeedsLastCommandOutput) c).setLastCommandOutput(lastCommandOutput);
                 }
                 c.run(null);
-                lastCommandOutput = c.getOutput();
+                String rawOutput = c.getOutput();
+                List<String> items = Arrays.asList(rawOutput.split("\\n"));
+                for (String item:items){
+                    lastCommandOutput=item;
+                    listOfOutputs.add(lastCommandOutput);
+                }
                 listOfOutputs.add(lastCommandOutput);
             }
         } catch (InterruptedException e) {
