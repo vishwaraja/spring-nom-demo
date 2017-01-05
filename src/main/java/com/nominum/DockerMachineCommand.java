@@ -125,6 +125,17 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
+        else if(this.command.equals("rm -f")){
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            this.vmName);
+
+        }
         return null;
 
     }

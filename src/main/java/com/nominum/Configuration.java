@@ -13,19 +13,16 @@ public class Configuration {
     private List<Command> commands;
     private String driverType;
     private String version;
+    private static URL path = Configuration.class
+            .getClassLoader().getResource("machineStorage");
+    private static String machineStoragePath = path.getPath();
+
 
     public static Configuration fromPostParams(String driver, String version, String userName) {
 
-
-        //File resourcesDirectory = new File("src/main/resources");
-        //String machineStoragePath = resourcesDirectory.getAbsolutePath()+"/"+"machineStorage";
-
-        URL path = Configuration.class
-                .getClassLoader().getResource("machineStorage");
-        String machineStoragePath = path.getPath();
         String vmName=userName+version;
 
-        Configuration c = new Configuration();
+        Configuration configuration = new Configuration();
 
         if (driver.equals("google")) {
 
@@ -79,20 +76,42 @@ public class Configuration {
                     .build();
 
 
-            c.commands = new ArrayList<>();
-            c.commands.add(dockerMachineCommand);
-            c.commands.add(dockerMachineIp);
-            c.commands.add(dockerCommand);
-            c.commands.add(dockerMachineIp2);
-            c.commands.add(dockerComposeCommand);
+            configuration.commands = new ArrayList<>();
+            configuration.commands.add(dockerMachineCommand);
+            configuration.commands.add(dockerMachineIp);
+            configuration.commands.add(dockerCommand);
+            configuration.commands.add(dockerMachineIp2);
+            configuration.commands.add(dockerComposeCommand);
 
         }
 
-        return c;
+        return configuration;
+    }
+
+    public static Configuration deleteFromPostParams(String vmName,String userName) {
+
+        Configuration configuration = new Configuration();
+        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
+                .command("rm -f")
+                .storagePath(machineStoragePath + "/" + userName)
+                .vmName(vmName)
+                .build();
+        configuration.commands = new ArrayList<>();
+        configuration.commands.add(dockerMachineCommand);
+        return configuration;
 
     }
+
+
+
 
     public List<Command> getCommands() {
         return commands;
     }
+
+
+
+
+
+
 }
