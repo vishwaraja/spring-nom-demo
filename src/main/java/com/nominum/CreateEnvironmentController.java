@@ -85,9 +85,10 @@ public class CreateEnvironmentController {
 
             }
         return mv;
-        }
+    }
 
-    private String getUserName() {
+    @ModelAttribute("username")
+    public String getUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
