@@ -65,15 +65,16 @@ $(document).ready(function() {
         $.post("/environment", {
             driver: $('#driver').val().toLowerCase(),
             version: $('#version').val()
+        }).then(function() {
+
         });
-        var es = new EventSource("/consolelogs", {
-            headers: {
-                Accept: "text/plain"
-            }
-        });
+
+        var es = new EventSource("/consolelogs");
         es.onmessage = function(e){
-            debugger;
-            $('#vm-status pre').append(e.data);
+            $('#vm-status pre').html(e.data
+                            .replace(/\\n/g, "\n"));
+
+            $('#vm-status').scrollTop($('#vm-status')[0].scrollHeight);
         };
     });
 });

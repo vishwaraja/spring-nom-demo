@@ -50,7 +50,6 @@ public class CreateEnvironmentController {
                 environment.getVersion(),
                 currentUserName);
         return executor.execute(configuration);
-
     }
 
     @GetMapping(value = "/consolelogs")
@@ -72,9 +71,4 @@ public class CreateEnvironmentController {
         return executor.execute(configuration);
 
     }
-
-
-
-
-
 }

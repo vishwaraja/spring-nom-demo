@@ -20,7 +20,7 @@ public class ConsoleVmOutput {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     String vmName = currentUserName + "16-2";
-    String fileName = "consoleOuput";
+    String fileName = "consoleOutput";
     URL path = Configuration.class
             .getClassLoader().getResource("machineStorage");
     String machineStoragePath = path.getPath();
@@ -33,9 +33,13 @@ public class ConsoleVmOutput {
         final StreamingResponseBody stream = new StreamingResponseBody() {
             @Override
             public void writeTo(OutputStream output) throws IOException, WebApplicationException {
-                InputStream targetStream = new FileInputStream(file);
-                writePreHtml(output);
-                IOUtils.copy(targetStream, output);
+                if(!file.exists()) {
+                    return;
+                }
+                writeToStream("data: ", output);
+                writeToStream(IOUtils.toString(new FileInputStream(file))
+                        .replaceAll("\\n", "\\\\n"), output);
+                writeToStream("\n\n", output);
             }
 
 
@@ -43,26 +47,14 @@ public class ConsoleVmOutput {
         return stream;
     }
 
-    private void writeListToStream(List<String> list, OutputStream output) {
+    private void writeToStream(String string, OutputStream output) {
         try {
-            for (String s : list) {
-                output.write(s.getBytes());
-            }
+            output.write(string.getBytes());
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    private void writePreHtml(OutputStream output) {
-        List<String> preHtml = new ArrayList<>();
-        preHtml.add("data: ");
-
-        writeListToStream(preHtml, output);
-    }
-
-
-
 
 }
 
