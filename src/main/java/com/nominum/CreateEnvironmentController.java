@@ -26,12 +26,11 @@ public class CreateEnvironmentController {
     private Executor executor;
     private ConsoleVmOutput consoleVmOutput;
     private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
-    private Authentication authentication =null;
-    private String currentUserName = null;
+
     public CreateEnvironmentController() {
 
         executor = new Executor();
-        authentication= SecurityContextHolder.getContext().getAuthentication();
+
 
     }
 
@@ -43,14 +42,15 @@ public class CreateEnvironmentController {
 
 
     @PostMapping(value = "/environment", produces = MediaType.TEXT_PLAIN)
-    public ResponseEntity<String> environmentSubmit(@ModelAttribute Environment environment) {
-        currentUserName = authentication.getName();
+    public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
         Configuration configuration = Configuration.fromPostParams(
                 environment.getDriver(),
                 environment.getVersion(),
                 currentUserName);
-        StreamingResponseBody response = executor.execute(configuration);
-        return ResponseEntity.ok("");
+        return executor.execute(configuration);
+
     }
 
     @GetMapping(value = "/consolelogs")
@@ -63,6 +63,8 @@ public class CreateEnvironmentController {
 
     @PostMapping(value = "/delete/environment",produces = MediaType.TEXT_PLAIN)
     public StreamingResponseBody environmetSubmit(@ModelAttribute VmTableForm vmTableForm){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
         currentUserName = authentication.getName();
         Configuration configuration = Configuration.deleteFromPostParams(
                 vmTableForm.getVmName(), currentUserName);
