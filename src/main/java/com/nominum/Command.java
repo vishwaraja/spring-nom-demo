@@ -5,6 +5,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -58,18 +62,16 @@ public abstract class Command {
         String fileName = "consoleOutput";
         vmName =currentUserName+"16-2";
         dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
+        dir.mkdirs();
         file = new File (dir, fileName);
 
-        PrintWriter writer = new PrintWriter(file, "UTF-8");
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         try {
             while ((line = input.readLine()) != null) {
+                Files.write(Paths.get(file.getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
-                writer.append(line+'\n');
-                writer.flush();
                 stringBuilder.append(line + '\n');
-                //If streaming back HTML swap \n with <br/>
                 if (os != null) {
                     os.write((line + "\n").getBytes());
                     os.flush();
@@ -77,7 +79,6 @@ public abstract class Command {
             }
         } finally {
             output = stringBuilder.toString();
-            writer.close();
         }
     }
 }

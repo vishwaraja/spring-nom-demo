@@ -15,24 +15,22 @@
 
             <main id="contentbar">
                 <div class="article">
-                    <form style="display: table" method="post">
-                        <p style="display: table-row">
-                            <label style="display: table-cell">Driver:</label>
+                    <form method="post">
+                        <label>Driver:
                             <select id="driver">
                                 <option>Google</option>
                             </select>
-                        </p>
-
-                        <p style="display: table-row">
-                            <label style="display: table-cell">Version:</label>
+                        </label>
+                        <label>Version:
                             <select id="version">
                                 <option>16-2</option>
                             </select>
-                        </p>
-                        <p style="display: table-row">
-                            <input id="submit" style="display: table-cell" type="submit" value="Submit"/>
-                            <input id="reset" style="display: table-cell" type="reset" value="Reset"/>
-                        </p>
+                        </label>
+                        <label>
+                            <input id="submit" type="submit" value="Submit"/>
+                            <input id="reset" type="reset" value="Reset"/>
+                            <span class="spinner hidden"></span>
+                        </label>
                     </form>
                 </div>
                 <div id="vm-status">
@@ -65,10 +63,14 @@ $(document).ready(function() {
         $.post("/environment", {
             driver: $('#driver').val().toLowerCase(),
             version: $('#version').val()
-        }).then(function() {
+        }).done(function() {
 
+        }).always(function() {
+            $('.spinner').addClass('hidden');
+            es.close();
         });
 
+        $('.spinner').removeClass('hidden');
         var es = new EventSource("/console/logs");
         es.onmessage = function(e){
             $('#vm-status pre').html(e.data

@@ -246,10 +246,36 @@ html, body {
     color: black;
 }
 
-table {
-}
+label { display: block; }
+
 td {
     padding: 0px 5px;
 }
-thead td {
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
 }
+
+.hidden {
+    display: none !important;
+}
+
+.spinner {
+    position: relative;
+}
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: 10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: spinner .6s linear infinite;
+}
+
