@@ -16,6 +16,7 @@ public class DockerComposeCommandLineConstants {
     public static final String TLSCACERT = "--tlscacert";
     public static final String TLSKEY = "--tlskey";
     public static final String SPACE = " ";
+    public static final String FORCE_RECREATE= "--force-recreate";
 
 
 }

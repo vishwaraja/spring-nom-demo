@@ -78,6 +78,7 @@ public class DockerComposeCommand
                         DockerComposeCommandLineConstants.TLSKEY + " " +
                         this.tlskey + " " +
                         this.command + " " +
+                        DockerComposeCommandLineConstants.FORCE_RECREATE+" "+
                         DockerComposeCommandLineConstants.DETACH);
 
 
