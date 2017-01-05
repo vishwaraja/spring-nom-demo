@@ -39,6 +39,10 @@ public class CreateEnvironmentController {
         return "environment";
     }
 
+    @GetMapping("/list")
+    public String list() {
+        return "list";
+    }
 
     @PostMapping(value = "/environment", produces = MediaType.TEXT_PLAIN)
     public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
