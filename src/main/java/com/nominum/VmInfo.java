@@ -3,7 +3,7 @@ package com.nominum;
 /**
  * Created by vpathi on 1/4/17.
  */
-public class VmTableForm {
+public class VmInfo {
 
     private String vmName;
     private String url;
@@ -17,9 +17,6 @@ public class VmTableForm {
     public void setDriver(String driver) {
         this.driver = driver;
     }
-
-
-
 
     public String getStatus() {
         return status;
