@@ -109,6 +109,7 @@ public class Configuration {
         DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
+                .format("name")
                 .build();
         configuration.commands = new ArrayList<>();
         configuration.commands.add(dockerMachineCommand);

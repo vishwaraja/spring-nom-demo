@@ -190,7 +190,7 @@ public class DockerMachineCommand extends Command {
 
 
 
-        if (this.driver.equals("google") && this.command.equals("create")) {
+        if (this.command!=null && this.command.equals("create") ) {
 
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
@@ -212,7 +212,7 @@ public class DockerMachineCommand extends Command {
                             DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
                             this.googleMachineImage + " " +
                             this.vmName);
-        } else if (this.driver.equals("google") && this.command.equals("ip")) {
+        } else if (this.command!=null && this.command.equals("ip")) {
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -223,7 +223,7 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
-        else if(this.command.equals("rm -f")){
+        else if(this.command!=null && this.command.equals("rm -f")){
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -234,7 +234,20 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
-        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
+        else if(this.command!=null && this.command.equals("ls")&&this.format.equals("name") ) {
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " +
+                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            this.storagePath + " " +
+                            this.command + " " +
+                            DockerMachineCommandLineConstants.FORMAT + " " +
+                            DockerMachineCommandLineConstants.VMNAME
+                            );
+
+        }
+        else if(this.command!=null && this.command.equals("ls")&&this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
