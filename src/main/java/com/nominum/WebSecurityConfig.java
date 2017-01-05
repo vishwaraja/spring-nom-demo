@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         users.put("user", "pass,ADMIN,enabled");
         users.put("jack", "yoyo,USER,enabled");
         users.put("phil", "pass,ADMIN,enabled");
+        users.put("eric", "pass,ADMIN,enabled");
         return new InMemoryUserDetailsManager(users);
     }
 }
