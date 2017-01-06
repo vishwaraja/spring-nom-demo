@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vpathi on 12/20/16.
@@ -27,10 +28,7 @@ public class CreateEnvironmentController {
     private ConsoleVmOutput consoleVmOutput;
 
     public CreateEnvironmentController() {
-
         executor = new Executor();
-
-
     }
 
     @GetMapping("/environment")
@@ -62,33 +60,28 @@ public class CreateEnvironmentController {
     }
 
     @PostMapping(value = "/delete/environment",produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody environmetSubmit(@ModelAttribute VmTableForm vmTableForm){
+    public StreamingResponseBody environmetSubmit(@ModelAttribute VmInfo vmInfo){
         Configuration configuration = Configuration.deleteFromPostParams(
-                vmTableForm.getVmName(), getUserName());
+                vmInfo.getVmName(), getUserName());
         return executor.execute(configuration);
 
     }
 
 
-    @GetMapping(value = "/vms/info", produces = MediaType.TEXT_PLAIN)
-    public ModelAndView getDockerMachineInfo() {
+    @ModelAttribute("vmInfo")
+    public List<VmInfo> getDockerMachineInfo() {
+        return executor.executeAsStringOutput(Configuration.forVmList(getUserName()))
+                .stream()
+                .map(vm -> {
+                    Configuration vmConfig = Configuration.forVmListInfo(getUserName(),vm);
+                    List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
 
-        Configuration configuration = Configuration.forVmList(getUserName());
-        List<String> vms = executor.executeAsStringOutput(configuration);
-
-        ModelAndView mv = new ModelAndView("list");
-        for (String vm:vms){
-            Configuration vmConfig = Configuration.forVmListInfo(getUserName(),vm);
-            List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
-
-            VmTableForm vmTableForm = new VmTableForm();
-            vmTableForm.setUrl(statusOutput.get(0));
-            vmTableForm.setStatus(statusOutput.get(1));
-            vmTableForm.setDriver(statusOutput.get(2));
-            mv.addObject("vmTableForm", vmTableForm);
-
-            }
-        return mv;
+                    VmInfo vmInfo = new VmInfo();
+                    vmInfo.setUrl(statusOutput.get(0));
+                    vmInfo.setStatus(statusOutput.get(1));
+                    vmInfo.setDriver(statusOutput.get(2));
+                    return vmInfo;
+                }).collect(Collectors.toList());
     }
 
     @ModelAttribute("username")

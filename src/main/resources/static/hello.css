@@ -1,4 +1,7 @@
- * { font-size: 14pt; }
+* {
+    font-size: 14pt;
+    box-sizing: border-box;
+}
 
 pre * {
      font-size: 10pt;
@@ -123,7 +126,6 @@ img {
     margin: 0 auto;
     padding: 10px 0;
     width: 970px;
-    background: #fff;
 }
 
 #content #contentbar {
@@ -261,8 +263,38 @@ html, body {
 
 label { display: block; }
 
+#content {
+    background-color: rgb(230, 233, 234);
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid rgb(200, 200, 200)
+}
+
+table * {
+    font-size: 10pt;
+    color: rgb(135, 135, 135);
+    width: 100%;
+}
+
+thead td {
+    font-weight: bold;
+    background-color: rgb(243, 245, 245);
+    border-bottom: 1px solid rgb(200, 200, 200)
+}
+
 td {
-    padding: 0px 5px;
+    padding: 10px;
+    border-left: 1px solid rgb(200, 200, 200)
+}
+
+tbody tr:nth-child(odd) td {
+    background-color: #fff;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: rgb(243, 245, 245);
 }
 
 @keyframes spinner {

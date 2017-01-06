@@ -17,14 +17,14 @@
                 <table>
                     <thead>
                         <tr><td>URL</td><td>Status</td><td>Driver</td></tr>
-                        <tr th:each="vmTableForm : ${vmTableForm}">
-                            <td th:text="${vmTableForm.url}"></td>
-                            <td th:text="${vmTableForm.status}"></td>
-                            <td th:text="${vmTableForm.driver}"></td>
-
-                            </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        <tr th:each="vm : ${vmInfo}">
+                                <td th:text="${vm.url}"></td>
+                                <td th:text="${vm.status}"></td>
+                                <td th:text="${vm.driver}"></td>
+                        </tr>
+                    </tbody>
                 </table>
             </main>
 
