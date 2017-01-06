@@ -243,7 +243,7 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
-        else if(this.command.equals("ls")&&this.format.equals("name") && this.filter==null ) {
+        else if(this.command.equals("ls")&&this.format.equals(DockerMachineCommandLineConstants.VMNAME) && this.filter==null ) {
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
