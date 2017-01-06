@@ -263,7 +263,7 @@ html, body {
 
 label {
     display: block;
-    padding: 5px 0px;
+    padding: 5px 0;
 }
 
 #content {
@@ -327,17 +327,17 @@ tbody tr:nth-child(even) td {
     animation: spinner .6s linear infinite;
 }
 
-input[type="submit"], input[type="reset"], .button{
+.button{
     color: #fff;
     background-color: rgb(47, 178, 228);
     border: 0px solid #fff;
-    padding: 10px 20px;
     font-size: 10pt;
     border-radius: 6%;
     font-weight: 100;
+    cursor: pointer;
 }
 
-input[type="submit"]:hover, input[type="reset"]:hover, .button:hover {
+.button:hover {
     background-color: rgb(125, 208, 228);
 }
 
