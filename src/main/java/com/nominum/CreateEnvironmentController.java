@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.ws.rs.core.MediaType;
@@ -80,6 +79,7 @@ public class CreateEnvironmentController {
                     vmInfo.setUrl(statusOutput.get(0));
                     vmInfo.setStatus(statusOutput.get(1));
                     vmInfo.setDriver(statusOutput.get(2));
+                    vmInfo.setVmName(statusOutput.get(3));
                     return vmInfo;
                 }).collect(Collectors.toList());
     }

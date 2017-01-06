@@ -16,10 +16,11 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>URL</td><td>Status</td><td>Driver</td></tr>
+                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td></tr>
                     </thead>
                     <tbody>
                         <tr th:each="vm : ${vmInfo}">
+                                <td th:text="${vm.vmName}"></td>
                                 <td th:text="${vm.url}"></td>
                                 <td th:text="${vm.status}"></td>
                                 <td th:text="${vm.driver}"></td>

@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
@@ -58,7 +57,7 @@ public abstract class Command {
 
 
         String line;
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.MILLISECONDS.sleep(200);
         String fileName = "consoleOutput";
         vmName =currentUserName+"16-2";
         dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");

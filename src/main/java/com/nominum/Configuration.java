@@ -137,10 +137,17 @@ public class Configuration {
                 .filter(vmName.trim())
                 .format("driver")
                 .build();
+        DockerMachineCommand name = new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .filter(vmName.trim())
+                .format("name")
+                .build();
         configuration.commands = new ArrayList<>();
         configuration.commands.add(ip);
         configuration.commands.add(state);
         configuration.commands.add(driver);
+        configuration.commands.add(name);
 
         return configuration;
     }
