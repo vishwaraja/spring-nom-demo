@@ -28,8 +28,6 @@ public class Executor {
                         }
                         c.run(output);
                         lastCommandOutput = c.getOutput();
-                        //output.write("-- DEBUG: End of command --".getBytes());
-                        //output.flush();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -46,20 +44,25 @@ public class Executor {
 
     public List<String> executeAsStringOutput(final Configuration configuration) {
         List<String> listOfOutputs = new ArrayList<>(configuration.getCommands().size());
-        String lastCommandOutput = null;
+        String output = null;
         try {
             for (Command c: configuration.getCommands()) {
-                if (c instanceof NeedsLastCommandOutput && lastCommandOutput != null) {
-                    ((NeedsLastCommandOutput) c).setLastCommandOutput(lastCommandOutput);
+                if (c instanceof NeedsLastCommandOutput && output != null) {
+                    ((NeedsLastCommandOutput) c).setLastCommandOutput(output);
                 }
                 c.run(null);
                 String rawOutput = c.getOutput();
-                List<String> items = Arrays.asList(rawOutput.split("\\n"));
+                List<String> items = Arrays.asList(rawOutput.split("\\n\\s*"));
                 for (String item:items){
-                    lastCommandOutput=item;
-                    listOfOutputs.add(lastCommandOutput);
+                    if(!item.equals("\n")) {
+                        output = item;
+                    }
+                    else{
+                        output = "--";
+                    }
+                    listOfOutputs.add(output);
                 }
-                
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

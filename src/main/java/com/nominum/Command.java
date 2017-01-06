@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vpathi on 12/19/16.
@@ -22,9 +21,6 @@ public abstract class Command {
 
     public abstract void stop();
     public String vmName;
-    public File dir;
-    public File file;
-
 
     public abstract ProcessBuilder getProcessBuilder();
 
@@ -59,9 +55,9 @@ public abstract class Command {
         String line;
         String fileName = "consoleOutput";
         vmName =currentUserName+"16-2";
-        dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
+        File dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
         dir.mkdirs();
-        file = new File (dir, fileName);
+        File file = new File (dir, fileName);
 
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
