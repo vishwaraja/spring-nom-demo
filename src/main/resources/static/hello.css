@@ -3,7 +3,7 @@
     box-sizing: border-box;
 }
 
-pre * {
+pre, pre * {
      font-size: 10pt;
 }
 html, #page {
@@ -46,6 +46,15 @@ img {
     -ms-interpolation-mode: bicubic;
 }
 
+a {
+    cursor: pointer;
+    color: #455A65;
+    text-decoration: none;
+    font-size: 12pt;
+}
+a:hover, a:hover * {
+    color: #BCCE98;
+}
 /* Logo */
 #logo {
     padding: 0;
@@ -113,12 +122,10 @@ img {
 #top-nav ul li a {
     display: block;
     margin: 0;
-    color: #455A65;
-    text-decoration: none;
+
 }
 
 #top-nav ul li.active a, #top-nav ul li a:hover {
-    color: #BCCE98;
 }
 
 /* Content */
@@ -272,24 +279,28 @@ label {
 
 table {
     border-collapse: collapse;
-    border: 1px solid rgb(200, 200, 200)
+    border: 1px solid rgb(200, 200, 200);
+    width: 100%;
 }
 
 table * {
-    font-size: 10pt;
     color: rgb(135, 135, 135);
-    width: 100%;
 }
 
 thead td {
     font-weight: bold;
     background-color: rgb(243, 245, 245);
-    border-bottom: 1px solid rgb(200, 200, 200)
+    border-bottom: 1px solid rgb(200, 200, 200);
 }
 
 td {
     padding: 10px;
-    border-left: 1px solid rgb(200, 200, 200)
+    border-left: 1px solid rgb(200, 200, 200);
+    font-size: 10pt;
+}
+
+td > a {
+    margin-right: 15px;
 }
 
 tbody tr:nth-child(odd) td {

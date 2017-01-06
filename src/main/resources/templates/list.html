@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Docker VMs</title>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" th:href="@{hello.css}"/>
 </head>
 <body>
@@ -16,7 +17,7 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td></tr>
+                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Actions</td></tr>
                     </thead>
                     <tbody>
                         <tr th:each="vm : ${vmInfo}">
@@ -24,6 +25,17 @@
                                 <td th:text="${vm.url}"></td>
                                 <td th:text="${vm.status}"></td>
                                 <td th:text="${vm.driver}"></td>
+                                <td>
+                                    <a href="#">
+                                        <i class="fa fa-play"></i>
+                                        Start</a>
+                                    <a href="#">
+                                        <i class="fa fa-stop"></i>
+                                        Stop</a>
+                                    <a href="#">
+                                        <i class="fa fa-times"></i>
+                                        Delete</a>
+                                </td>
                         </tr>
                     </tbody>
                 </table>
