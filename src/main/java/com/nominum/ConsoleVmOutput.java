@@ -24,7 +24,7 @@ public class ConsoleVmOutput {
     URL path = Configuration.class
             .getClassLoader().getResource("machineStorage");
     String machineStoragePath = path.getPath();
-    File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" + vmName + "/");
+    File dir = new File(machineStoragePath + "/" + currentUserName + "/logs/" + vmName + "/");
     File file = new File(dir, fileName);
 
     public StreamingResponseBody getLogs() {

@@ -55,7 +55,7 @@ public abstract class Command {
         String line;
         String fileName = "consoleOutput";
         vmName =currentUserName+"16-2";
-        File dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
+        File dir = new File (machineStoragePath+"/"+currentUserName+"/logs/"+vmName+"/");
         dir.mkdirs();
         File file = new File (dir, fileName);
 

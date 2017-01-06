@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +72,7 @@ public class CreateEnvironmentController {
     public List<VmInfo> getDockerMachineInfo() {
         return executor.executeAsStringOutput(Configuration.forVmList(getUserName()))
                 .stream()
+                .filter(l -> !StringUtils.isEmpty(l))
                 .map(vm -> {
                     Configuration vmConfig = Configuration.forVmListInfo(getUserName(),vm);
                     List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
