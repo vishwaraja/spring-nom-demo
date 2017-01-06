@@ -167,6 +167,15 @@ public class DockerMachineCommand extends Command {
             return this;
         }
 
+        public Builder format(String ...formats) {
+            instance.format = "";
+            for(String f: formats) {
+                instance.format += f + "\\\\n";
+            }
+
+            return this;
+        }
+
         public Builder ip(String ip) {
             instance.ip = ip;
             return this;
@@ -188,9 +197,9 @@ public class DockerMachineCommand extends Command {
         String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
 
 
+        if(this.command == null) { return null; }
 
-
-        if (this.command!=null && this.command.equals("create") ) {
+        if  (this.command.equals("create") ) {
 
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
@@ -212,7 +221,7 @@ public class DockerMachineCommand extends Command {
                             DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
                             this.googleMachineImage + " " +
                             this.vmName);
-        } else if (this.command!=null && this.command.equals("ip")) {
+        } else if (this.command.equals("ip")) {
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -223,7 +232,7 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
-        else if(this.command!=null && this.command.equals("rm -f")){
+        else if(this.command.equals("rm -f")){
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -234,7 +243,7 @@ public class DockerMachineCommand extends Command {
                             this.vmName);
 
         }
-        else if(this.command!=null && this.command.equals("ls")&&this.format.equals("name") && this.filter==null ) {
+        else if(this.command.equals("ls")&&this.format.equals("name") && this.filter==null ) {
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -247,7 +256,7 @@ public class DockerMachineCommand extends Command {
                             );
 
         }
-        else if(this.command!=null && this.command.equals("ls")&&this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
+        else if(this.command.equals("ls") && this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -262,7 +271,7 @@ public class DockerMachineCommand extends Command {
                             DockerMachineCommandLineConstants.URL);
         }
 
-        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("state")){
+        else {
             return new ProcessBuilder().command(
                     DockerMachineCommandLineConstants.SHELL,
                     DockerMachineCommandLineConstants.SHELL_PARAM,
@@ -274,39 +283,8 @@ public class DockerMachineCommand extends Command {
                             DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
                             this.filter+ " " +
                             DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.STATE);
+                            this.format);
         }
-        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("driver")){
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.FILTER+ " " +
-                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
-                            this.filter+ " " +
-                            DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.DRIVER_TYPE);
-        }
-        else if(this.filter != null && !this.filter.isEmpty() && this.format.equals("name")){
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.FILTER+ " " +
-                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
-                            this.filter+ " " +
-                            DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.VMNAME);
-        }
-
-        return null;
-
     }
 
     @Override

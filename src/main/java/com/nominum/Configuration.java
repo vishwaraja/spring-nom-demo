@@ -109,7 +109,7 @@ public class Configuration {
         DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
-                .format("name")
+                .format(DockerMachineCommandLineConstants.VMNAME)
                 .build();
         configuration.commands = new ArrayList<>();
         configuration.commands.add(dockerMachineCommand);
@@ -118,36 +118,16 @@ public class Configuration {
     public static Configuration forVmListInfo(String userName,String vmName) {
 
         Configuration configuration = new Configuration();
-        DockerMachineCommand ip = new DockerMachineCommand.Builder()
-                .command("ls")
-                .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName.trim())
-                .format("url")
-                .build();
-
-        DockerMachineCommand state = new DockerMachineCommand.Builder()
-                .command("ls")
-                .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName.trim())
-                .format("state")
-                .build();
-        DockerMachineCommand driver = new DockerMachineCommand.Builder()
-                .command("ls")
-                .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName.trim())
-                .format("driver")
-                .build();
-        DockerMachineCommand name = new DockerMachineCommand.Builder()
-                .command("ls")
-                .storagePath(machineStoragePath + "/" + userName)
-                .filter(vmName.trim())
-                .format("name")
-                .build();
         configuration.commands = new ArrayList<>();
-        configuration.commands.add(ip);
-        configuration.commands.add(state);
-        configuration.commands.add(driver);
-        configuration.commands.add(name);
+        configuration.commands.add(new DockerMachineCommand.Builder()
+                .command("ls")
+                .storagePath(machineStoragePath + "/" + userName)
+                .filter(vmName.trim())
+                .format(DockerMachineCommandLineConstants.URL,
+                        DockerMachineCommandLineConstants.STATE,
+                        DockerMachineCommandLineConstants.DRIVER_TYPE,
+                        DockerMachineCommandLineConstants.VMNAME)
+                .build());
 
         return configuration;
     }
