@@ -59,7 +59,7 @@ public class Executor {
                     lastCommandOutput=item;
                     listOfOutputs.add(lastCommandOutput);
                 }
-                listOfOutputs.add(lastCommandOutput);
+                
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
