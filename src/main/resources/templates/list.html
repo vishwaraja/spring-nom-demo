@@ -31,11 +31,10 @@
                                     <a href="#">
                                         <i class="fa fa-stop"></i>
                                         Stop</a>
-                                    <a th:href href="@{/delete/machine/}+${vm.vmName}">
+                                    <a th:href="@{/delete/machine/}+${vm.vmName}" >
                                         <i class="fa fa-times"></i>
                                         Delete</a>
                                 </td>
-                            <td><a th:href="@{/delete/machine/}+${vm.vmName}" >Delete</a></td>
                         </tr>
                     </tbody>
                 </table>
