@@ -5,7 +5,6 @@ import org.springframework.core.io.Resource;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.net.URL;
 
 /**
  * Created by vpathi on 12/19/16.
@@ -45,10 +44,6 @@ public class DockerMachineCommand extends Command {
 
     public String getGoogleMachineImage() {
         return googleMachineImage;
-    }
-
-    public String getStoragePath() {
-        return storagePath;
     }
 
     public String getIp() {
@@ -333,14 +328,9 @@ public class DockerMachineCommand extends Command {
 
 
         private void setmachineCommand(){
-            URL path = DockerMachineCommand.class
-                    .getClassLoader().getResource("machineStorage");
+            String fileName =instance.vmName+"_"+"consoleOutput";
 
-            String machineStoragePath = path.getPath();
-            String fileName = "consoleOutput";
-            File dir = new File(machineStoragePath+"/"+instance.userName+"/"+"machines"+"/");
-            dir.mkdirs();
-            instance.vmLogPath = new File (dir, instance.vmName+"_"+fileName);
+            instance.vmLogPath = new File (instance.storagePath,fileName);
 
             instance.machineCommand= DockerMachineCommandLineConstants.DEBUG +" "+
                     DockerMachineCommandLineConstants.STORAGE_PATH + " " +
@@ -396,6 +386,8 @@ public class DockerMachineCommand extends Command {
         return file.getAbsolutePath();
 
     }
+
+
 
 }
 

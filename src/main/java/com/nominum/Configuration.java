@@ -1,5 +1,11 @@
 package com.nominum;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +17,7 @@ import java.util.List;
 public class Configuration {
 
     private List<Command> commands;
-    private String driverType;
-    private String version;
-    private static URL path = Configuration.class
-            .getClassLoader().getResource("machineStorage");
-    private static String machineStoragePath = path.getPath();
+    private static String machineStoragePath = getStoragePath();
 
 
     public static Configuration fromPostParams(String driver, String version, String userName) {
@@ -130,12 +132,21 @@ public class Configuration {
 
         return configuration;
     }
-
-
-
-
     public List<Command> getCommands() {
         return commands;
+    }
+
+    @PostConstruct
+    public static String getStoragePath()  {
+        Resource resource = new ClassPathResource("machineStorage");
+        File file = null;
+        try {
+            file = resource.getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
+
     }
 
 }
