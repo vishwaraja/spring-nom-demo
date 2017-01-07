@@ -26,7 +26,7 @@ public class Configuration {
 
         if (driver.equals("google")) {
 
-            DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
+            DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmCreateCommandBuilder()
                     .command("create")
                     .storagePath(machineStoragePath + "/" + userName)
                     .driver("google")
@@ -36,11 +36,11 @@ public class Configuration {
                     .googleDiskSize("150")
                     .googleMachineImage("https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20160627")
                     .vmName(vmName)
+                    .userName(userName)
                     .build();
 
-            DockerMachineCommand dockerMachineIp = new DockerMachineCommand.Builder()
+            DockerMachineCommand dockerMachineIp = new DockerMachineCommand.VmIPCommandBuilder()
                     .command("ip")
-                    .driver("google")
                     .storagePath(machineStoragePath + "/" + userName)
                     .vmName(vmName)
                     .build();
@@ -55,9 +55,8 @@ public class Configuration {
                     .tlsCert(machineStoragePath + "/" + userName + "/machines/" + vmName + "/cert.pem")
                     .tlsKey(machineStoragePath + "/" + userName + "/machines/" + vmName + "/key.pem")
                     .build();
-            DockerMachineCommand dockerMachineIp2 = new DockerMachineCommand.Builder()
+            DockerMachineCommand dockerMachineIp2 = new DockerMachineCommand.VmIPCommandBuilder()
                     .command("ip")
-                    .driver("google")
                     .storagePath(machineStoragePath + "/" + userName)
                     .vmName(vmName)
                     .build();
@@ -91,7 +90,7 @@ public class Configuration {
     public static Configuration deleteFromPostParams(String vmName,String userName) {
 
         Configuration configuration = new Configuration();
-        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
+        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmDeleteCommandBuilder()
                 .command("rm -f")
                 .storagePath(machineStoragePath + "/" + userName)
                 .vmName(vmName)
@@ -106,7 +105,7 @@ public class Configuration {
         Configuration configuration = new Configuration();
 
 
-        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.Builder()
+        DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmNamesCommandBuilder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
                 .format(DockerMachineCommandLineConstants.VMNAME)
@@ -119,7 +118,7 @@ public class Configuration {
 
         Configuration configuration = new Configuration();
         configuration.commands = new ArrayList<>();
-        configuration.commands.add(new DockerMachineCommand.Builder()
+        configuration.commands.add(new DockerMachineCommand.VmInfoCommandBuilder()
                 .command("ls")
                 .storagePath(machineStoragePath + "/" + userName)
                 .filter(vmName.trim())
@@ -138,10 +137,5 @@ public class Configuration {
     public List<Command> getCommands() {
         return commands;
     }
-
-
-
-
-
 
 }

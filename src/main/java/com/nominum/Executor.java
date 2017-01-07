@@ -54,12 +54,7 @@ public class Executor {
                 String rawOutput = c.getOutput();
                 List<String> items = Arrays.asList(rawOutput.split("\\n\\s*"));
                 for (String item:items){
-                    if(!item.equals("\n")) {
-                        output = item;
-                    }
-                    else{
-                        output = "--";
-                    }
+                    output = item;
                     listOfOutputs.add(output);
                 }
 

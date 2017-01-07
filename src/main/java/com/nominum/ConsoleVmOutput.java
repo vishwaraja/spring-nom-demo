@@ -7,10 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.ws.rs.WebApplicationException;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by vpathi on 1/4/17.
@@ -20,11 +21,11 @@ public class ConsoleVmOutput {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     String vmName = currentUserName + "16-2";
-    String fileName = "consoleOutput";
+    String fileName = vmName+"_"+"consoleOutput";
     URL path = Configuration.class
             .getClassLoader().getResource("machineStorage");
     String machineStoragePath = path.getPath();
-    File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" + vmName + "/");
+    File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" );
     File file = new File(dir, fileName);
 
     public StreamingResponseBody getLogs() {

@@ -1,5 +1,6 @@
 package com.nominum;
 
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -19,9 +20,19 @@ public class DockerMachineCommand extends Command {
     private String storagePath;
     private String filter;
     private String format;
+    private File vmLogPath;
+    private String userName;
+    private String machineCommand;
 
-    // No-op constructor for builder
     private DockerMachineCommand() {
+    }
+
+    public String getMachineCommand() {
+        return machineCommand;
+    }
+
+    public void setMachineCommand(String machineCommand) {
+        this.machineCommand = machineCommand;
     }
 
     public void setCommand(String command) {
@@ -78,96 +89,114 @@ public class DockerMachineCommand extends Command {
 
 
 
-    @Override
-    public String toString() {
-        return DockerMachineCommandLineConstants.SHELL + " " +
-                DockerMachineCommandLineConstants.SHELL_PARAM + " " +
-                DockerMachineCommandLineConstants.DOCKER_MACHINE + " " +
-                this.command + " " +
-                DockerMachineCommandLineConstants.DRIVER + " " +
-                this.driver + " " +
-                DockerMachineCommandLineConstants.GOOGLE_PROJECT + " " +
-                this.googleProject + " " +
-                DockerMachineCommandLineConstants.GOOGLE_MACHINE_TYPE + " " +
-                this.googleMachineType + " " +
-                DockerMachineCommandLineConstants.GOOGLE_ZONE + " " +
-                this.googleZone + " " +
-                DockerMachineCommandLineConstants.GOOGLE_DISK_SIZE + " " +
-                this.googleDiskSize + " " +
-                DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
-                this.googleMachineImage + " " +
-                this.vmName;
-    }
-
-
-    public static class Builder {
+    public static class VmNamesCommandBuilder {
         DockerMachineCommand instance;
-
-        public Builder() {
+        public VmNamesCommandBuilder() {
             instance = new DockerMachineCommand();
         }
 
-        public static DockerMachineCommand from(Builder builder) {
-            return builder.build();
+        public VmNamesCommandBuilder command(String command) {
+            instance.command = command;
+            return this;
+
+        }
+        public VmNamesCommandBuilder storagePath(String storagePath) {
+            instance.storagePath = storagePath;
+            return this;
+        }
+        public VmNamesCommandBuilder format(String format) {
+            instance.format = format;
+            return this;
         }
 
-        public Builder command(String command) {
+        private void setmachineCommand(){
+
+            instance.machineCommand =
+                    DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                    instance.storagePath + " " +
+                    instance.command + " " +
+                    DockerMachineCommandLineConstants.FORMAT+" "+
+                    instance.format;
+        }
+
+
+        public DockerMachineCommand build() {
+            setmachineCommand();
+            return instance;
+        }
+    }
+    public static class VmIPCommandBuilder {
+        DockerMachineCommand instance;
+        public VmIPCommandBuilder() {
+            instance = new DockerMachineCommand();
+        }
+
+        public VmIPCommandBuilder command(String command) {
+            instance.command = command;
+            return this;
+
+        }
+        public VmIPCommandBuilder storagePath(String storagePath) {
+            instance.storagePath = storagePath;
+            return this;
+        }
+        public VmIPCommandBuilder filter(String filter) {
+            instance.filter = filter;
+            return this;
+        }
+
+        public VmIPCommandBuilder format(String format) {
+            instance.format = format;
+            return this;
+        }
+        public VmIPCommandBuilder vmName(String vmName) {
+            instance.vmName = vmName;
+            return this;
+        }
+
+        private void setmachineCommand(){
+
+            instance.machineCommand=
+                    DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                    instance.storagePath + " " +
+                    instance.command + " " +
+                    instance.vmName;
+        }
+
+        public DockerMachineCommand build() {
+            setmachineCommand();
+            return instance;
+        }
+
+
+    }
+
+
+    public static class VmInfoCommandBuilder {
+        DockerMachineCommand instance;
+
+        public VmInfoCommandBuilder() {
+            instance = new DockerMachineCommand();
+        }
+
+        public VmInfoCommandBuilder command(String command) {
             instance.command = command;
             return this;
 
         }
 
-        public Builder storagePath(String storagePath) {
+        public VmInfoCommandBuilder storagePath(String storagePath) {
             instance.storagePath = storagePath;
             return this;
         }
 
-        public Builder googleProject(String googleProject) {
-            instance.googleProject = googleProject;
-            return this;
-
-        }
-
-        public Builder googleMachineType(String googleMachineType) {
-            instance.googleMachineType = googleMachineType;
-            return this;
-        }
-
-        public Builder googleZone(String googleZone) {
-            instance.googleZone = googleZone;
-            return this;
-        }
-
-        public Builder googleDiskSize(String googleDiskSize) {
-            instance.googleDiskSize = googleDiskSize;
-            return this;
-        }
-
-        public Builder driver(String driver) {
-            instance.driver = driver;
-            return this;
-        }
-
-        public Builder googleMachineImage(String googleMachineImage) {
-            instance.googleMachineImage = googleMachineImage;
-            return this;
-        }
-
-        public Builder vmName(String vmName) {
-            instance.vmName = vmName;
-            return this;
-        }
-        public Builder filter(String filter) {
+        public VmInfoCommandBuilder filter(String filter) {
             instance.filter = filter;
             return this;
         }
 
-        public Builder format(String format) {
-            instance.format = format;
-            return this;
-        }
 
-        public Builder format(String ...formats) {
+        public VmInfoCommandBuilder format(String ...formats) {
             instance.format = "";
             for(String f: formats) {
                 instance.format += f + "\\\\n";
@@ -175,116 +204,165 @@ public class DockerMachineCommand extends Command {
 
             return this;
         }
+        private void setmachineCommand(){
 
-        public Builder ip(String ip) {
-            instance.ip = ip;
-            return this;
+            instance.machineCommand=
+                    DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                    instance.storagePath + " " +
+                    instance.command + " " +
+                    DockerMachineCommandLineConstants.FILTER+" "+
+                    DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+
+                    instance.filter+ " "+
+                    DockerMachineCommandLineConstants.FORMAT+ " "+
+                    instance.format;
+
         }
 
+
         public DockerMachineCommand build() {
-            //validateUserObject(dockerMachineCommand);
+            setmachineCommand();
             return instance;
         }
     }
-
-
-
-    @Override
-    public ProcessBuilder getProcessBuilder() {
-        String WHITESPACE=" ";
-        URL path = DockerMachineCommand.class
-                .getClassLoader().getResource("binaries/docker-machine");
-        String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
-
-
-        if(this.command == null) { return null; }
-
-        if  (this.command.equals("create") ) {
-
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " + "--debug  " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.DRIVER + " " +
-                            this.driver + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_PROJECT + " " +
-                            this.googleProject + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_TYPE + " " +
-                            this.googleMachineType + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_ZONE + " " +
-                            this.googleZone + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_DISK_SIZE + " " +
-                            this.googleDiskSize + " " +
-                            DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
-                            this.googleMachineImage + " " +
-                            this.vmName);
-        } else if (this.command.equals("ip")) {
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            this.vmName);
-
-        }
-        else if(this.command.equals("rm -f")){
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            this.vmName);
-
-        }
-        else if(this.command.equals("ls")&&this.format.equals("name") && this.filter==null ) {
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.VMNAME
-                            );
-
-        }
-        else if(this.command.equals("ls") && this.filter != null && !this.filter.isEmpty() && this.format.equals("url")){
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.FILTER+ " " +
-                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
-                            this.filter+ " " +
-                            DockerMachineCommandLineConstants.FORMAT + " " +
-                            DockerMachineCommandLineConstants.URL);
+    public static class VmDeleteCommandBuilder {
+        DockerMachineCommand instance;
+        public VmDeleteCommandBuilder() {
+            instance = new DockerMachineCommand();
         }
 
-        else {
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " +
-                            DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                            this.storagePath + " " +
-                            this.command + " " +
-                            DockerMachineCommandLineConstants.FILTER+ " " +
-                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+// no sapce required here
-                            this.filter+ " " +
-                            DockerMachineCommandLineConstants.FORMAT + " " +
-                            this.format);
+
+        public VmDeleteCommandBuilder command(String command) {
+            instance.command = command;
+            return this;
+
         }
+        public VmDeleteCommandBuilder storagePath(String storagePath) {
+            instance.storagePath = storagePath;
+            return this;
+        }
+        public VmDeleteCommandBuilder filter(String filter) {
+            instance.filter = filter;
+            return this;
+        }
+
+        public VmDeleteCommandBuilder vmName(String vmName) {
+            instance.vmName = vmName;
+            return this;
+        }
+        private void setmachineCommand(){
+
+            instance.machineCommand=
+                    DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                            instance.storagePath + " " +
+                            instance.command + " " +
+                            instance.vmName;
+        }
+
+
+        public DockerMachineCommand build() {
+            setmachineCommand();
+            return instance;
+        }
+
+
+
+    }
+
+    public static class VmCreateCommandBuilder {
+        DockerMachineCommand instance;
+
+        public VmCreateCommandBuilder() {
+            instance = new DockerMachineCommand();
+        }
+
+        public VmCreateCommandBuilder command(String command) {
+            instance.command = command;
+            return this;
+
+        }
+
+        public VmCreateCommandBuilder storagePath(String storagePath) {
+
+            instance.storagePath = storagePath;
+            return this;
+        }
+
+        public VmCreateCommandBuilder googleProject(String googleProject) {
+            instance.googleProject = googleProject;
+            return this;
+
+        }
+
+        public VmCreateCommandBuilder googleMachineType(String googleMachineType) {
+            instance.googleMachineType = googleMachineType;
+            return this;
+        }
+
+        public VmCreateCommandBuilder googleZone(String googleZone) {
+            instance.googleZone = googleZone;
+            return this;
+        }
+
+        public VmCreateCommandBuilder googleDiskSize(String googleDiskSize) {
+            instance.googleDiskSize = googleDiskSize;
+            return this;
+        }
+
+        public VmCreateCommandBuilder driver(String driver) {
+            instance.driver = driver;
+            return this;
+        }
+
+        public VmCreateCommandBuilder googleMachineImage(String googleMachineImage) {
+            instance.googleMachineImage = googleMachineImage;
+            return this;
+        }
+
+        public VmCreateCommandBuilder vmName(String vmName) {
+            instance.vmName = vmName;
+            return this;
+        }
+        public VmCreateCommandBuilder userName(String userName) {
+            instance.userName = userName;
+            return this;
+        }
+
+
+        private void setmachineCommand(){
+            URL path = DockerMachineCommand.class
+                    .getClassLoader().getResource("machineStorage");
+
+            String machineStoragePath = path.getPath();
+            String fileName = "consoleOutput";
+            File dir = new File(machineStoragePath+"/"+instance.userName+"/"+"machines"+"/");
+            dir.mkdirs();
+            instance.vmLogPath = new File (dir, instance.vmName+"_"+fileName);
+
+            instance.machineCommand= DockerMachineCommandLineConstants.DEBUG +" "+
+                    DockerMachineCommandLineConstants.STORAGE_PATH + " " +
+                    instance.storagePath + " " +
+                    instance.command + " " +
+                    DockerMachineCommandLineConstants.DRIVER + " " +
+                    instance.driver + " " +
+                    DockerMachineCommandLineConstants.GOOGLE_PROJECT + " " +
+                    instance.googleProject + " " +
+                    DockerMachineCommandLineConstants.GOOGLE_MACHINE_TYPE + " " +
+                    instance.googleMachineType + " " +
+                    DockerMachineCommandLineConstants.GOOGLE_ZONE + " " +
+                    instance.googleZone + " " +
+                    DockerMachineCommandLineConstants.GOOGLE_DISK_SIZE + " " +
+                    instance.googleDiskSize + " " +
+                    DockerMachineCommandLineConstants.GOOGLE_MACHINE_IMAGE + " " +
+                    instance.googleMachineImage + " " +
+                    instance.vmName;
+        }
+
+
+        public DockerMachineCommand build() {
+            setmachineCommand();
+            return instance;
+        }
+
     }
 
     @Override
@@ -292,7 +370,28 @@ public class DockerMachineCommand extends Command {
 
     }
 
+    @Override
+    protected File getVmLogPath() {
+        return vmLogPath ;
+    }
 
+
+    @Override
+    public ProcessBuilder getProcessBuilder() {
+
+        URL path = DockerMachineCommand.class
+                .getClassLoader().getResource("binaries/docker-machine");
+        String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
+
+        return new ProcessBuilder().command(
+                DockerMachineCommandLineConstants.SHELL,
+                DockerMachineCommandLineConstants.SHELL_PARAM,
+                machine + " " +
+                this.machineCommand);
+
+
+    }
 
 
 }
+

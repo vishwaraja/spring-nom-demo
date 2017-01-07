@@ -7,9 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.ws.rs.core.MediaType;
@@ -58,10 +56,17 @@ public class CreateEnvironmentController {
         return new ResponseEntity(consoleVmOutput.getLogs(), headers, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/delete/environment",produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody environmetSubmit(@ModelAttribute VmInfo vmInfo){
+    @GetMapping(value = "/testdelete",produces = MediaType.TEXT_PLAIN)
+    public String delete(){
+
+        return "deleted";
+
+    }
+
+    @GetMapping(value = "/delete/machine/{vmName}",produces = MediaType.TEXT_PLAIN)
+    public StreamingResponseBody deleteEnvironment(@PathVariable("vmName") String vmName, Model model){
         Configuration configuration = Configuration.deleteFromPostParams(
-                vmInfo.getVmName(), getUserName());
+                vmName, getUserName());
         return executor.execute(configuration);
 
     }
@@ -76,10 +81,11 @@ public class CreateEnvironmentController {
                     List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
 
                     VmInfo vmInfo = new VmInfo();
+                    vmInfo.setVmName(statusOutput.get(3));
                     vmInfo.setUrl(statusOutput.get(0));
                     vmInfo.setStatus(statusOutput.get(1));
                     vmInfo.setDriver(statusOutput.get(2));
-                    vmInfo.setVmName(statusOutput.get(3));
+
                     return vmInfo;
                 }).collect(Collectors.toList());
     }

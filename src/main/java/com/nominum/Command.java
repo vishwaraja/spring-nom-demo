@@ -1,8 +1,5 @@
 package com.nominum;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
@@ -18,9 +15,13 @@ public abstract class Command {
     protected String lastCommandOutput;
     private String output;
     private Process process;
-
+    private File vmLogPath=null;
     public abstract void stop();
-    public String vmName;
+
+    protected File getVmLogPath(){
+        return vmLogPath;
+    }
+
 
     public abstract ProcessBuilder getProcessBuilder();
 
@@ -29,14 +30,8 @@ public abstract class Command {
     }
 
     public void run(OutputStream os) throws IOException, InterruptedException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
         URL googleCredentials = DockerMachineCommandLineConstants.class
                 .getClassLoader().getResource("googleCredentials/nominum-docker-machines-cb3dc450e32f.json");
-
-        URL path = Configuration.class
-                .getClassLoader().getResource("machineStorage");
-        String machineStoragePath = path.getPath();
 
         ProcessBuilder processBuilder = getProcessBuilder();
         Map<String, String> envs = processBuilder.environment();
@@ -50,29 +45,47 @@ public abstract class Command {
         processBuilder.redirectErrorStream(true);
         processBuilder.redirectOutput();
         process = processBuilder.start();
-
-
         String line;
-        String fileName = "consoleOutput";
-        vmName =currentUserName+"16-2";
-        File dir = new File (machineStoragePath+"/"+currentUserName+"/"+"machines"+"/"+vmName+"/");
-        dir.mkdirs();
-        File file = new File (dir, fileName);
+        String executing_command=processBuilder.command().toString();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        try {
-            while ((line = input.readLine()) != null) {
-                Files.write(Paths.get(file.getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        //I'll come back and fix this.
+        if (executing_command.contains("rm -f")||
+                executing_command.contains("create")||
+                executing_command.contains("up")) {
+            StringBuilder stringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            try {
+                while ((line = input.readLine()) != null) {
+                    Files.write(Paths.get(getVmLogPath().getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
-                stringBuilder.append(line + '\n');
-                if (os != null) {
-                    os.write((line + "\n").getBytes());
-                    os.flush();
+                    stringBuilder.append(line + '\n');
+                    if (os != null) {
+                        System.out.println(line + "\n");
+                        os.write((line + "\n").getBytes());
+                        os.flush();
+                    }
                 }
+            } finally {
+                output = stringBuilder.toString();
             }
-        } finally {
-            output = stringBuilder.toString();
+        }
+
+        else{
+            StringBuilder stringBuilder = new StringBuilder();
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            try {
+                while ((line = input.readLine()) != null) {
+                    //Files.write(Paths.get(vmLogPath.getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+                    stringBuilder.append(line + '\n');
+                    if (os != null) {
+                        os.write((line + "\n").getBytes());
+                        os.flush();
+                    }
+                }
+            } finally {
+                output = stringBuilder.toString();
+            }
         }
     }
 }

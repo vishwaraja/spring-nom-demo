@@ -16,7 +16,7 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td></tr>
+                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Delete</td></tr>
                     </thead>
                     <tbody>
                         <tr th:each="vm : ${vmInfo}">
@@ -24,6 +24,7 @@
                                 <td th:text="${vm.url}"></td>
                                 <td th:text="${vm.status}"></td>
                                 <td th:text="${vm.driver}"></td>
+                            <td><a th:href="@{/delete/machine/}+${vm.vmName}" >Delete</a></td>
                         </tr>
                     </tbody>
                 </table>
