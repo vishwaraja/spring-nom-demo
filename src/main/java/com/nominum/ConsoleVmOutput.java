@@ -2,16 +2,18 @@ package com.nominum;
 
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.WebApplicationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 
 /**
  * Created by vpathi on 1/4/17.
@@ -22,13 +24,11 @@ public class ConsoleVmOutput {
     String currentUserName = authentication.getName();
     String vmName = currentUserName + "16-2";
     String fileName = vmName+"_"+"consoleOutput";
-    URL path = Configuration.class
-            .getClassLoader().getResource("machineStorage");
-    String machineStoragePath = path.getPath();
-    File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" );
-    File file = new File(dir, fileName);
 
-    public StreamingResponseBody getLogs() {
+    public StreamingResponseBody getLogs()  {
+        String machineStoragePath = getExecutablePath();
+        File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" );
+        File file = new File(dir, fileName);
 
 
         final StreamingResponseBody stream = new StreamingResponseBody() {
@@ -56,6 +56,18 @@ public class ConsoleVmOutput {
             e.printStackTrace();
         }
     }
+    @PostConstruct
+    public String getExecutablePath()  {
+        Resource resource = new ClassPathResource("machineStorage");
+        File file = null;
+        try {
+            file = resource.getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
+    }
+
 
 }
 
