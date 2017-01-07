@@ -136,7 +136,7 @@ public class Configuration {
     }
 
     @PostConstruct
-    public static String getStoragePath()  {
+    public  String getStoragePath()  {
         Resource resource = new ClassPathResource("machineStorage");
         File file = null;
         try {
