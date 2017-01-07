@@ -16,7 +16,7 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Delete</td></tr>
+                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Actions</td></tr>
                     </thead>
                     <tbody>
                         <tr th:each="vm : ${vmInfo}">
@@ -24,6 +24,17 @@
                                 <td th:text="${vm.url}"></td>
                                 <td th:text="${vm.status}"></td>
                                 <td th:text="${vm.driver}"></td>
+                                <td>
+                                    <a href="#">
+                                        <i class="fa fa-play"></i>
+                                        Start</a>
+                                    <a href="#">
+                                        <i class="fa fa-stop"></i>
+                                        Stop</a>
+                                    <a th:href href="@{/delete/machine/}+${vm.vmName}">
+                                        <i class="fa fa-times"></i>
+                                        Delete</a>
+                                </td>
                             <td><a th:href="@{/delete/machine/}+${vm.vmName}" >Delete</a></td>
                         </tr>
                     </tbody>
