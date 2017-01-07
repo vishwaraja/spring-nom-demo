@@ -17,13 +17,14 @@ import java.util.List;
 public class Configuration {
 
     private List<Command> commands;
-    private static String machineStoragePath = new Configuration().getStoragePath();;
+    private static String machineStoragePath =null;
 
 
     public static Configuration fromPostParams(String driver, String version, String userName) {
 
         String vmName=userName+version;
         Configuration configuration = new Configuration();
+        machineStoragePath= configuration.getStoragePath();
 
         if (driver.equals("google")) {
 
@@ -91,6 +92,7 @@ public class Configuration {
     public static Configuration deleteFromPostParams(String vmName,String userName) {
 
         Configuration configuration = new Configuration();
+        machineStoragePath= configuration.getStoragePath();
         DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmDeleteCommandBuilder()
                 .command("rm -f")
                 .storagePath(machineStoragePath + "/" + userName)
@@ -104,6 +106,7 @@ public class Configuration {
 
     public static Configuration forVmList(String userName) {
         Configuration configuration = new Configuration();
+        machineStoragePath= configuration.getStoragePath();
 
 
         DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmNamesCommandBuilder()
