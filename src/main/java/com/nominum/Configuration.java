@@ -17,13 +17,12 @@ import java.util.List;
 public class Configuration {
 
     private List<Command> commands;
-    private static String machineStoragePath = getStoragePath();
+    private static String machineStoragePath = new Configuration().getStoragePath();;
 
 
     public static Configuration fromPostParams(String driver, String version, String userName) {
 
         String vmName=userName+version;
-
         Configuration configuration = new Configuration();
 
         if (driver.equals("google")) {
