@@ -329,7 +329,8 @@ public class DockerMachineCommand extends Command {
 
         private void setmachineCommand(){
             String fileName =instance.vmName+"_"+"consoleOutput";
-
+            File dir = new File(instance.storagePath+ "/"+"machines"+"/");
+            dir.mkdirs();
             instance.vmLogPath = new File (instance.storagePath,fileName);
 
             instance.machineCommand= DockerMachineCommandLineConstants.DEBUG +" "+
