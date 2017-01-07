@@ -33,6 +33,8 @@ public class Executor {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 } finally {
 
                     output.close();
@@ -62,6 +64,8 @@ public class Executor {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return listOfOutputs;

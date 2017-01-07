@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
-
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("login");
@@ -26,4 +25,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         configurer.setTaskExecutor(new SimpleAsyncTaskExecutor());
         super.configureAsyncSupport(configurer);
     }
+
+
 }

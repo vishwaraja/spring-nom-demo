@@ -1,6 +1,10 @@
 package com.nominum;
 
-import java.net.URL;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
 
 /**
  * Created by vpathi on 1/1/17.
@@ -75,14 +79,9 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
     }
 
     @Override
-    public ProcessBuilder getProcessBuilder() {
+    public ProcessBuilder getProcessBuilder() throws Exception {
 
-        URL path = DockerCommand.class
-                .getClassLoader().getResource("binaries/docker");
-
-        String docker = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
-
-
+        String docker =getExecutablePath();
         return new ProcessBuilder().command(
                 DockerCommandLineConstants.SHELL,
                 DockerCommandLineConstants.SHELL_PARAM,
@@ -104,6 +103,14 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
         );
 
     }
+
+    @PostConstruct
+    public String getExecutablePath() throws Exception {
+        Resource resource = new ClassPathResource("/binaries/docker");
+        File file = resource.getFile();
+        return file.getAbsolutePath();
+    }
+
 
     public static class Builder {
         DockerCommand instance;

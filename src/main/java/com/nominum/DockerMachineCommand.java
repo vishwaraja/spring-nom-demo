@@ -1,5 +1,9 @@
 package com.nominum;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.net.URL;
 
@@ -377,21 +381,21 @@ public class DockerMachineCommand extends Command {
 
 
     @Override
-    public ProcessBuilder getProcessBuilder() {
-
-        URL path = DockerMachineCommand.class
-                .getClassLoader().getResource("binaries/docker-machine");
-        String machine = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
-
-        return new ProcessBuilder().command(
-                DockerMachineCommandLineConstants.SHELL,
-                DockerMachineCommandLineConstants.SHELL_PARAM,
-                machine + " " +
-                this.machineCommand);
-
-
+    public ProcessBuilder getProcessBuilder() throws Exception {
+            String machine= getExecutablePath();
+            return new ProcessBuilder().command(
+                    DockerMachineCommandLineConstants.SHELL,
+                    DockerMachineCommandLineConstants.SHELL_PARAM,
+                    machine + " " + this.machineCommand);
     }
 
+    @PostConstruct
+    public String getExecutablePath() throws Exception {
+        Resource resource = new ClassPathResource("/binaries/docker-machine");
+        File file = resource.getFile();
+        return file.getAbsolutePath();
+
+    }
 
 }
 

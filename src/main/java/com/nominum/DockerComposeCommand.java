@@ -1,6 +1,10 @@
 package com.nominum;
 
-import java.net.URL;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
 
 /**
  * Created by vpathi on 12/18/16.
@@ -55,12 +59,9 @@ public class DockerComposeCommand
     }
 
     @Override
-    public ProcessBuilder getProcessBuilder() {
-        URL path = DockerComposeCommand.class
-                .getClassLoader().getResource("binaries/docker-compose");
-        String compose = path.getPath().replaceFirst("^(file:)?(www\\.)?", "");
+    public ProcessBuilder getProcessBuilder() throws Exception {
 
-
+        String compose = getExecutablePath();
         return new ProcessBuilder().command(
 
                 DockerComposeCommandLineConstants.SHELL,
@@ -82,6 +83,13 @@ public class DockerComposeCommand
                         DockerComposeCommandLineConstants.DETACH);
 
 
+    }
+
+    @PostConstruct
+    public String getExecutablePath() throws Exception {
+        Resource resource = new ClassPathResource("/binaries/docker-compose");
+        File file = resource.getFile();
+        return file.getAbsolutePath();
     }
 
     @Override

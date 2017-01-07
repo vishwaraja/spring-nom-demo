@@ -23,13 +23,13 @@ public abstract class Command {
     }
 
 
-    public abstract ProcessBuilder getProcessBuilder();
+    public abstract ProcessBuilder getProcessBuilder() throws Exception;
 
     public String getOutput() {
         return output;
     }
 
-    public void run(OutputStream os) throws IOException, InterruptedException {
+    public void run(OutputStream os) throws Exception {
         URL googleCredentials = DockerMachineCommandLineConstants.class
                 .getClassLoader().getResource("googleCredentials/nominum-docker-machines-cb3dc450e32f.json");
 
