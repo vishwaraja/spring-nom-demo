@@ -198,7 +198,7 @@ public class DockerMachineCommand extends Command {
         public VmInfoCommandBuilder format(String ...formats) {
             instance.format = "";
             for(String f: formats) {
-                instance.format += f + "\\\\n";
+                instance.format+=f+"\\\\n";
             }
 
             return this;
