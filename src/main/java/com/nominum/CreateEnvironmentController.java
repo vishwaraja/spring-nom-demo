@@ -1,6 +1,7 @@
 package com.nominum;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,13 +72,13 @@ public class CreateEnvironmentController {
 
     }
 
-
     @ModelAttribute("vmInfo")
     public List<VmInfo> getDockerMachineInfo() {
         return executor.executeAsStringOutput(Configuration.forVmList(getUserName()))
                 .stream()
+                .filter(vm-> StringUtils.isNotBlank(vm))
                 .map(vm -> {
-                    Configuration vmConfig = Configuration.forVmListInfo(getUserName(),vm);
+                    Configuration vmConfig = Configuration.forVmListInfo(getUserName(), vm);
                     List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
 
                     VmInfo vmInfo = new VmInfo();
@@ -87,6 +88,7 @@ public class CreateEnvironmentController {
                     vmInfo.setDriver(statusOutput.get(2));
 
                     return vmInfo;
+
                 }).collect(Collectors.toList());
     }
 

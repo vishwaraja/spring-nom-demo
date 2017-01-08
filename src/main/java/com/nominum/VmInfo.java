@@ -42,7 +42,7 @@ public class VmInfo {
         this.vmName = vmName;
     }
 
-    private String userName;
+
 
 
 
