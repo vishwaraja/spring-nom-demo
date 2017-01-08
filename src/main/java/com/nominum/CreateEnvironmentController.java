@@ -57,17 +57,12 @@ public class CreateEnvironmentController {
         return new ResponseEntity(consoleVmOutput.getLogs(), headers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/testdelete",produces = MediaType.TEXT_PLAIN)
-    public String delete(){
 
-        return "deleted";
 
-    }
-
-    @GetMapping(value = "/delete/machine/{vmName}",produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody deleteEnvironment(@PathVariable("vmName") String vmName, Model model){
-        Configuration configuration = Configuration.deleteFromPostParams(
-                vmName, getUserName());
+    @GetMapping(value = "/machine/{vmName}/{action}",produces = MediaType.TEXT_PLAIN)
+    public StreamingResponseBody deleteEnvironment(@PathVariable("vmName") String vmName,@PathVariable String action, Model model){
+        Configuration configuration = Configuration.forVmActions(
+                vmName, getUserName(), action);
         return executor.execute(configuration);
 
     }

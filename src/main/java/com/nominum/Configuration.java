@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vpathi on 12/19/16.
@@ -89,12 +91,16 @@ public class Configuration {
         return configuration;
     }
 
-    public static Configuration deleteFromPostParams(String vmName,String userName) {
+    public static Configuration forVmActions(String vmName,String userName,String action) {
+        Map<String,String> actions= new HashMap<String,String>();
+        actions.put("start","start");
+        actions.put("stop","stop");
+        actions.put("delete","rm -f");
 
         Configuration configuration = new Configuration();
         machineStoragePath= configuration.getStoragePath();
         DockerMachineCommand dockerMachineCommand = new DockerMachineCommand.VmDeleteCommandBuilder()
-                .command("rm -f")
+                .command(actions.get(action))
                 .storagePath(machineStoragePath + "/" + userName)
                 .vmName(vmName)
                 .build();

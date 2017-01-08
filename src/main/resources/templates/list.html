@@ -25,13 +25,13 @@
                                 <td th:text="${vm.status}"></td>
                                 <td th:text="${vm.driver}"></td>
                                 <td>
-                                    <a th:href="@{/start/machine/}+${vm.vmName}" >
+                                    <a th:href="@{/machine/}+${vm.vmName}+@{/start}" >
                                         <i class="fa fa-play"></i>
                                         Start</a>
-                                    <a th:href="@{/stop/machine/}+${vm.vmName}" >
+                                    <a th:href="@{/machine/}+${vm.vmName}+@{/stop}" >
                                         <i class="fa fa-stop"></i>
                                         Stop</a>
-                                    <a th:href="@{/delete/machine/}+${vm.vmName}" >
+                                    <a th:href="@{/machine/}+${vm.vmName}+@{/delete}" >
                                         <i class="fa fa-times"></i>
                                         Delete</a>
                                 </td>
