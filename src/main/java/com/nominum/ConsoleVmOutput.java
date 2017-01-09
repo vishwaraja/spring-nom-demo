@@ -27,7 +27,7 @@ public class ConsoleVmOutput {
 
     public StreamingResponseBody getLogs()  {
         String machineStoragePath = getExecutablePath();
-        File dir = new File(machineStoragePath + "/" + currentUserName + "/" + "machines" + "/" );
+        File dir = new File(machineStoragePath + "/" + currentUserName + "/"  );
         File file = new File(dir, fileName);
 
 

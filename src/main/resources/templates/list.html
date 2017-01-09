@@ -16,26 +16,26 @@
             <main id="contentbar">
                 <table>
                     <thead>
-                        <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Actions</td></tr>
+                    <tr><td>Name</td><td>URL</td><td>Status</td><td>Driver</td><td>Actions</td></tr>
                     </thead>
                     <tbody>
-                        <tr th:each="vm : ${vmInfo}">
-                                <td th:text="${vm.vmName}"></td>
-                                <td th:text="${vm.url}"></td>
-                                <td th:text="${vm.status}"></td>
-                                <td th:text="${vm.driver}"></td>
-                                <td>
-                                    <a th:href="@{/machine/}+${vm.vmName}+@{/start}" >
-                                        <i class="fa fa-play"></i>
-                                        Start</a>
-                                    <a th:href="@{/machine/}+${vm.vmName}+@{/stop}" >
-                                        <i class="fa fa-stop"></i>
-                                        Stop</a>
-                                    <a th:href="@{/machine/}+${vm.vmName}+@{/delete}" >
-                                        <i class="fa fa-times"></i>
-                                        Delete</a>
-                                </td>
-                        </tr>
+                    <tr th:each="vm : ${vmInfo}">
+                        <td th:text="${vm.vmName}"></td>
+                        <td th:text="${vm.url}"></td>
+                        <td th:text="${vm.status}"></td>
+                        <td th:text="${vm.driver}"></td>
+                        <td>
+                            <a th:href="@{/machine/}+${vm.vmName}+@{/start}" >
+                                <i class="fa fa-play"></i>
+                                Start</a>
+                            <a th:href="@{/machine/}+${vm.vmName}+@{/stop}" >
+                                <i class="fa fa-stop"></i>
+                                Stop</a>
+                            <a th:href="@{/machine/}+${vm.vmName}+@{/delete}" >
+                                <i class="fa fa-times"></i>
+                                Delete</a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
                 <a href="/environment" class="button">Add</a>

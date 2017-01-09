@@ -1,11 +1,14 @@
 package com.nominum;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vpathi on 12/19/16.
@@ -29,7 +32,7 @@ public abstract class Command {
         return output;
     }
 
-    public void run(OutputStream os) throws Exception {
+    public int run() throws Exception {
         URL googleCredentials = DockerMachineCommandLineConstants.class
                 .getClassLoader().getResource("googleCredentials/nominum-docker-machines-cb3dc450e32f.json");
 
@@ -43,27 +46,21 @@ public abstract class Command {
         System.out.println("DEBUG: Command executing: " + processBuilder.command().toString());
         System.out.println("DEBUG:" + lastCommandOutput);
         processBuilder.redirectErrorStream(true);
-        processBuilder.redirectOutput();
+        //processBuilder.redirectOutput();
         process = processBuilder.start();
         String line;
-        String executing_command=processBuilder.command().toString();
+//I'll come back and fix this.
 
-        //I'll come back and fix this.
-        if (executing_command.contains("rm -f")||
-                executing_command.contains("create")||
-                executing_command.contains("up")) {
+        String executing_command=processBuilder.command().toString();
+        if ( executing_command.contains("create")) {
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             try {
                 while ((line = input.readLine()) != null) {
+                    TimeUnit.SECONDS.sleep(1);
                     Files.write(Paths.get(getVmLogPath().getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-
                     stringBuilder.append(line + '\n');
-                    if (os != null) {
-                        System.out.println(line + "\n");
-                        os.write((line + "\n").getBytes());
-                        os.flush();
-                    }
+
                 }
             } finally {
                 output = stringBuilder.toString();
@@ -75,17 +72,31 @@ public abstract class Command {
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             try {
                 while ((line = input.readLine()) != null) {
-                    //Files.write(Paths.get(vmLogPath.getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                   // Files.write(Paths.get(vmLogPath.getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
                     stringBuilder.append(line + '\n');
-                    if (os != null) {
-                        os.write((line + "\n").getBytes());
-                        os.flush();
-                    }
+
                 }
             } finally {
                 output = stringBuilder.toString();
             }
         }
+//            StringBuilder stringBuilder = new StringBuilder();
+//            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            try {
+//                while ((line = input.readLine()) != null) {
+//   //                 Files.write(Paths.get(getVmLogPath().getAbsolutePath()), (line + '\n').getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+//
+//                    stringBuilder.append(line + '\n');
+//
+//                }
+//            } finally {
+//                output = stringBuilder.toString();
+//            }
+        int exit=process.waitFor();
+        if (exit!=0){
+            System.out.print("COMMAND:"+processBuilder.command().toString());
+        }
+        return exit;
     }
 }

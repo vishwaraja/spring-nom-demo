@@ -1,11 +1,7 @@
 package com.nominum;
 
 
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-
-import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,33 +11,32 @@ import java.util.List;
  */
 public class Executor {
 
-    public StreamingResponseBody execute(final Configuration configuration) {
-        final StreamingResponseBody stream = new StreamingResponseBody() {
-            @Override
-            public void writeTo(OutputStream output) throws IOException, WebApplicationException {
+    public void execute(final Configuration configuration) {
 
-                String lastCommandOutput = " ";
-                try {
-                    for (Command c : configuration.getCommands()) {
-                        if (c instanceof NeedsLastCommandOutput && lastCommandOutput != null) {
-                            ((NeedsLastCommandOutput) c).setLastCommandOutput(lastCommandOutput);
-                        }
-                        c.run(output);
-                        lastCommandOutput = c.getOutput();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-
-                    output.close();
+        String lastCommandOutput = " ";
+        int exitStatus=0;
+        try {
+            for (Command c : configuration.getCommands()) {
+                if (c instanceof NeedsLastCommandOutput && lastCommandOutput != null) {
+                    ((NeedsLastCommandOutput) c).setLastCommandOutput(lastCommandOutput);
                 }
+
+                if (exitStatus==0){
+                    exitStatus=c.run();
+                    System.out.print("\n********************************************\n"+exitStatus);
+                }
+                else{
+                    throw new IOException("Invalid status code"+ exitStatus);
+
+                }
+
+                lastCommandOutput = c.getOutput();
             }
-        };
-        return stream;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public List<String> executeAsStringOutput(final Configuration configuration) {
@@ -52,7 +47,7 @@ public class Executor {
                 if (c instanceof NeedsLastCommandOutput && output != null) {
                     ((NeedsLastCommandOutput) c).setLastCommandOutput(output);
                 }
-                c.run(null);
+                c.run();
                 String rawOutput = c.getOutput();
                 List<String> items = Arrays.asList(rawOutput.split("\\n"));
                 for (String item:items){

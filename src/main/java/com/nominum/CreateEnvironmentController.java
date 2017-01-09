@@ -1,15 +1,20 @@
 package com.nominum;
 
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import org.thymeleaf.util.StringUtils;
 
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -20,11 +25,16 @@ import java.util.stream.Collectors;
  * Created by vpathi on 12/20/16.
  */
 @Controller
-public class CreateEnvironmentController {
+@Component
+public class CreateEnvironmentController implements IAuthenticationFacade {
 
     private Executor executor;
     private ConsoleVmOutput consoleVmOutput;
 
+    @Override
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
     public CreateEnvironmentController() {
         executor = new Executor();
     }
@@ -41,12 +51,20 @@ public class CreateEnvironmentController {
     }
 
     @PostMapping(value = "/environment", produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody environmentSubmit(@ModelAttribute Environment environment) {
+    public ResponseEntity<String> environmentSubmit(@ModelAttribute Environment environment) {
         Configuration configuration = Configuration.fromPostParams(
                 environment.getDriver(),
                 environment.getVersion(),
                 getUserName());
-        return executor.execute(configuration);
+        Thread t1 =new Thread(new Runnable() {
+            @Override
+            public void run() {
+                executor.execute(configuration);
+            }
+        });
+        t1.start();
+
+        return ResponseEntity.ok("");
     }
 
     @GetMapping(value = "/console/logs")
@@ -57,13 +75,12 @@ public class CreateEnvironmentController {
         return new ResponseEntity(consoleVmOutput.getLogs(), headers, HttpStatus.OK);
     }
 
-
-
     @GetMapping(value = "/machine/{vmName}/{action}",produces = MediaType.TEXT_PLAIN)
-    public StreamingResponseBody deleteEnvironment(@PathVariable("vmName") String vmName,@PathVariable String action, Model model){
+    public ResponseEntity<String> deleteEnvironment(@PathVariable("vmName") String vmName,@PathVariable String action, Model model){
         Configuration configuration = Configuration.forVmActions(
                 vmName, getUserName(), action);
-        return executor.execute(configuration);
+        executor.execute(configuration);
+        return ResponseEntity.ok("");
 
     }
 
@@ -71,7 +88,7 @@ public class CreateEnvironmentController {
     public List<VmInfo> getDockerMachineInfo() {
         return executor.executeAsStringOutput(Configuration.forVmList(getUserName()))
                 .stream()
-                .filter(vm-> StringUtils.isNotBlank(vm))
+                .filter(vm-> !StringUtils.isEmpty(vm))
                 .map(vm -> {
                     Configuration vmConfig = Configuration.forVmListInfo(getUserName(), vm);
                     List<String> statusOutput = executor.executeAsStringOutput(vmConfig);
@@ -91,4 +108,7 @@ public class CreateEnvironmentController {
     public String getUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
+
+
 }
+

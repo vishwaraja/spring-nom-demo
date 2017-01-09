@@ -112,10 +112,10 @@ public class DockerMachineCommand extends Command {
 
             instance.machineCommand =
                     DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                    instance.storagePath + " " +
-                    instance.command + " " +
-                    DockerMachineCommandLineConstants.FORMAT+" "+
-                    instance.format;
+                            instance.storagePath + " " +
+                            instance.command + " " +
+                            DockerMachineCommandLineConstants.FORMAT+" "+
+                            instance.format;
         }
 
 
@@ -157,9 +157,9 @@ public class DockerMachineCommand extends Command {
 
             instance.machineCommand=
                     DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                    instance.storagePath + " " +
-                    instance.command + " " +
-                    instance.vmName;
+                            instance.storagePath + " " +
+                            instance.command + " " +
+                            instance.vmName;
         }
 
         public DockerMachineCommand build() {
@@ -207,13 +207,13 @@ public class DockerMachineCommand extends Command {
 
             instance.machineCommand=
                     DockerMachineCommandLineConstants.STORAGE_PATH + " " +
-                    instance.storagePath + " " +
-                    instance.command + " " +
-                    DockerMachineCommandLineConstants.FILTER+" "+
-                    DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+
-                    instance.filter+ " "+
-                    DockerMachineCommandLineConstants.FORMAT+ " "+
-                    instance.format;
+                            instance.storagePath + " " +
+                            instance.command + " " +
+                            DockerMachineCommandLineConstants.FILTER+" "+
+                            DockerMachineCommandLineConstants.FILTER_ATTRIB_NAME+
+                            instance.filter+ " "+
+                            DockerMachineCommandLineConstants.FORMAT+ " "+
+                            instance.format;
 
         }
 
@@ -373,11 +373,11 @@ public class DockerMachineCommand extends Command {
 
     @Override
     public ProcessBuilder getProcessBuilder() throws Exception {
-            String machine= getExecutablePath();
-            return new ProcessBuilder().command(
-                    DockerMachineCommandLineConstants.SHELL,
-                    DockerMachineCommandLineConstants.SHELL_PARAM,
-                    machine + " " + this.machineCommand);
+        String machine= getExecutablePath();
+        return new ProcessBuilder().command(
+                DockerMachineCommandLineConstants.SHELL,
+                DockerMachineCommandLineConstants.SHELL_PARAM,
+                machine + " " + this.machineCommand);
     }
 
     @PostConstruct
@@ -391,4 +391,3 @@ public class DockerMachineCommand extends Command {
 
 
 }
-

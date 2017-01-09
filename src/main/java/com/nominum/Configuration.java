@@ -2,7 +2,6 @@ package com.nominum;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
