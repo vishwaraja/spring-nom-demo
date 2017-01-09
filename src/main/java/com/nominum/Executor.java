@@ -33,7 +33,10 @@ public class Executor {
                 lastCommandOutput = c.getOutput();
             }
 
-        } catch (Exception e) {
+        }catch (org.apache.catalina.connector.ClientAbortException ca) {
+            System.out.println("ClientAbortException caught");
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -60,7 +63,8 @@ public class Executor {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return listOfOutputs;

@@ -104,12 +104,12 @@ public class DockerCommand extends Command implements NeedsLastCommandOutput {
 
     }
 
-    @PostConstruct
-    public String getExecutablePath() throws Exception {
-        Resource resource = new ClassPathResource("/binaries/docker");
-        File file = resource.getFile();
-        return file.getAbsolutePath();
-    }
+//    @PostConstruct
+//    public String getExecutablePath() throws Exception {
+//        Resource resource = new ClassPathResource("/binaries/docker");
+//        File file = resource.getFile();
+//        return file.getAbsolutePath();
+//    }
 
 
     public static class Builder {

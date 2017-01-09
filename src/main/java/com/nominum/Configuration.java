@@ -143,17 +143,17 @@ public class Configuration {
         return commands;
     }
 
-    @PostConstruct
-    public  String getStoragePath()  {
-        Resource resource = new ClassPathResource("machineStorage");
-        File file = null;
-        try {
-            file = resource.getFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file.getAbsolutePath();
-
-    }
+//    @PostConstruct
+//    public  String getStoragePath()  {
+//        Resource resource = new ClassPathResource("machineStorage");
+//        File file = null;
+//        try {
+//            file = resource.getFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return file.getAbsolutePath();
+//
+//    }
 
 }

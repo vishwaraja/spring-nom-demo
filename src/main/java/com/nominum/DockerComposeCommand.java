@@ -85,12 +85,12 @@ public class DockerComposeCommand
 
     }
 
-    @PostConstruct
-    public String getExecutablePath() throws Exception {
-        Resource resource = new ClassPathResource("/binaries/docker-compose");
-        File file = resource.getFile();
-        return file.getAbsolutePath();
-    }
+//    @PostConstruct
+//    public String getExecutablePath() throws Exception {
+//        Resource resource = new ClassPathResource("/binaries/docker-compose");
+//        File file = resource.getFile();
+//        return file.getAbsolutePath();
+//    }
 
     @Override
     public void stop() {

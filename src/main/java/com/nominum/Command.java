@@ -3,7 +3,6 @@ package com.nominum;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -62,7 +61,11 @@ public abstract class Command {
                     stringBuilder.append(line + '\n');
 
                 }
-            } finally {
+
+            }catch (org.apache.catalina.connector.ClientAbortException ca) {
+                System.out.println("ClientAbortException caught");
+            }
+            finally {
                 output = stringBuilder.toString();
             }
         }
@@ -77,7 +80,11 @@ public abstract class Command {
                     stringBuilder.append(line + '\n');
 
                 }
-            } finally {
+
+            }catch (org.apache.catalina.connector.ClientAbortException ca) {
+                System.out.println("ClientAbortException caught");
+            }
+            finally {
                 output = stringBuilder.toString();
             }
         }

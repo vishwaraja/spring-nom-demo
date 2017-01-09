@@ -37,10 +37,17 @@ public class ConsoleVmOutput {
                 if(!file.exists()) {
                     return;
                 }
-                writeToStream("data: ", output);
-                writeToStream(IOUtils.toString(new FileInputStream(file))
-                        .replaceAll("\\n", "\\\\n"), output);
-                writeToStream("\n\n", output);
+                try {
+                    writeToStream("data: ", output);
+                    writeToStream(IOUtils.toString(new FileInputStream(file))
+                            .replaceAll("\\n", "\\\\n"), output);
+                    writeToStream("\n\n", output);
+                }catch (org.apache.catalina.connector.ClientAbortException ca) {
+                    System.out.println("ClientAbortException caught");
+                }
+                catch (Exception e){
+
+                }
             }
 
 
@@ -70,7 +77,6 @@ public class ConsoleVmOutput {
 
 
 }
-
 
 
 
