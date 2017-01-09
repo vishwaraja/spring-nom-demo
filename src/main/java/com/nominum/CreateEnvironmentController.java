@@ -4,9 +4,7 @@ package com.nominum;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +23,12 @@ import java.util.stream.Collectors;
  * Created by vpathi on 12/20/16.
  */
 @Controller
-@Component
-public class CreateEnvironmentController implements IAuthenticationFacade {
+public class CreateEnvironmentController {
 
     private Executor executor;
     private ConsoleVmOutput consoleVmOutput;
 
-    @Override
-    public Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+
     public CreateEnvironmentController() {
         executor = new Executor();
     }
